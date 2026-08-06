@@ -9,7 +9,7 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
 
@@ -37,73 +37,47 @@ jobs:
           }
           EOF
 
-      - name: Init APK project with Bubblewrap (loop-safe)
+      - name: Init APK project with Bubblewrap (silence-based)
         id: init
         continue-on-error: true
-        timeout-minutes: 6
+        timeout-minutes: 10
         run: |
           mkdir -p android-build
           cd android-build
           cat > init.exp << 'EOF'
           #!/usr/bin/expect -f
-          set timeout 60
+          # استراتژی: هر پرامپت شناخته‌شده (پسورد، تاییدیه) رو دقیق جواب می‌ده.
+          # هر چیز ناشناخته‌ای که ۸ ثانیه ساکت بمونه رو به‌عنوان "پرامپت با پیش‌فرض" در نظر می‌گیره و Enter می‌زنه.
+          set timeout 8
           log_user 1
           set counter 0
-          set max_steps 60
+          set max_steps 80
+
           spawn bubblewrap init --manifest https://mhosseinbaghaee-byte.github.io/aegis-app/manifest.json
+
           expect {
             -re "(?i)regenerate.*\\(Y/n\\)" {
               incr counter
-              if {$counter > $max_steps} { puts "LOOP_GUARD_TRIGGERED"; exit 2 }
               send "no\r"; exp_continue
             }
             -re "(?i)assword" {
               incr counter
-              if {$counter > $max_steps} { puts "LOOP_GUARD_TRIGGERED"; exit 2 }
               send "password123\r"; exp_continue
             }
             -re "(?i)country code" {
               incr counter
-              if {$counter > $max_steps} { puts "LOOP_GUARD_TRIGGERED"; exit 2 }
               send "IR\r"; exp_continue
             }
-            -re "(?i)state or province" {
+            timeout {
               incr counter
-              if {$counter > $max_steps} { puts "LOOP_GUARD_TRIGGERED"; exit 2 }
-              send "Tehran\r"; exp_continue
+              if {$counter > $max_steps} {
+                puts "LOOP_GUARD_TRIGGERED after $counter steps"
+                exit 2
+              }
+              send "\r"
+              exp_continue
             }
-            -re "(?i)city or locality" {
-              incr counter
-              if {$counter > $max_steps} { puts "LOOP_GUARD_TRIGGERED"; exit 2 }
-              send "Tehran\r"; exp_continue
-            }
-            -re "(?i)organizational unit" {
-              incr counter
-              if {$counter > $max_steps} { puts "LOOP_GUARD_TRIGGERED"; exit 2 }
-              send "Aegis\r"; exp_continue
-            }
-            -re "(?i)organization\\b" {
-              incr counter
-              if {$counter > $max_steps} { puts "LOOP_GUARD_TRIGGERED"; exit 2 }
-              send "Aegis\r"; exp_continue
-            }
-            -re "(?i)first and last name" {
-              incr counter
-              if {$counter > $max_steps} { puts "LOOP_GUARD_TRIGGERED"; exit 2 }
-              send "Aegis\r"; exp_continue
-            }
-            -re "(?i)correct.*\\(y/n\\)" {
-              incr counter
-              if {$counter > $max_steps} { puts "LOOP_GUARD_TRIGGERED"; exit 2 }
-              send "yes\r"; exp_continue
-            }
-            -re "\\? " {
-              incr counter
-              if {$counter > $max_steps} { puts "LOOP_GUARD_TRIGGERED"; exit 2 }
-              send "\r"; exp_continue
-            }
-            timeout { puts "PROMPT_TIMEOUT_60S"; exit 3 }
-            eof { puts "REACHED_EOF_NORMALLY" }
+            eof { puts "REACHED_EOF_NORMALLY after $counter steps" }
           }
           EOF
           chmod +x init.exp
