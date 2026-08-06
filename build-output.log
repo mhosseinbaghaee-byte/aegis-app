@@ -28,4 +28,10 @@ the PWA:
 		- To open https://example.com/: /
 		- To open https://example.com/path-to-pwa/: /path-to-pwa/
 
-[32m?[39m [1mDomain:[22m[0m [0m[2m(mhosseinbaghaee-byte.github.io) [22m[43D[43C
+[32m?[39m [1mDomain:[22m[0m [0m[2m(mhosseinbaghaee-byte.github.io) [22m[43D[43CPROMPT_TIMEOUT_60S
+EXIT_CODE_OF_EXPECT: 3
+--- ls after init ---
+total 12
+drwxr-xr-x 2 runner runner 4096 Aug  6 09:05 .
+drwxr-xr-x 5 runner runner 4096 Aug  6 09:05 ..
+-rwxr-xr-x 1 runner runner 1810 Aug  6 09:05 init.exp
