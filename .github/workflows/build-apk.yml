@@ -21,8 +21,10 @@ jobs:
       - name: Set up Android SDK
         uses: android-actions/setup-android@v3
 
-      - name: Install Bubblewrap CLI
-        run: npm install -g @bubblewrap/cli
+      - name: Install Bubblewrap CLI and expect
+        run: |
+          npm install -g @bubblewrap/cli
+          sudo apt-get update -y && sudo apt-get install -y expect
 
       - name: Configure Bubblewrap paths
         run: |
@@ -33,39 +35,44 @@ jobs:
             "androidSdkPath": "$ANDROID_HOME"
           }
           EOF
-          cat ~/.bubblewrap/config.json
 
-      - name: Generate signing keystore
-        run: |
-          keytool -genkeypair -v -keystore android.keystore -alias androidkey \
-            -keyalg RSA -keysize 2048 -validity 10000 \
-            -storepass password123 -keypass password123 \
-            -dname "CN=Aegis, OU=Aegis, O=Aegis, L=Tehran, S=Tehran, C=IR"
-
-      - name: Install expect
-        run: sudo apt-get update -y && sudo apt-get install -y expect
-
-      - name: Build APK with Bubblewrap
+      - name: Init + Build APK with Bubblewrap (fully automated)
         id: build
         continue-on-error: true
         run: |
-          cat > build.exp << 'EOF'
+          mkdir -p android-build
+          cd android-build
+          cat > init.exp << 'EOF'
           #!/usr/bin/expect -f
-          set timeout 600
+          set timeout 900
           log_user 1
-          spawn bubblewrap build
+          spawn bubblewrap init --manifest https://mhosseinbaghaee-byte.github.io/aegis-app/manifest.json
           expect {
-            -re "regenerate.*\\(Y/n\\)" { send "no\r"; exp_continue }
-            -re "Password for the Key Store" { send "password123\r"; exp_continue }
-            -re "Password for the Key\\b" { send "password123\r"; exp_continue }
+            -re "(?i)regenerate.*\\(Y/n\\)" { send "no\r"; exp_continue }
+            -re "(?i)assword" { send "password123\r"; exp_continue }
+            -re "(?i)country code" { send "IR\r"; exp_continue }
+            -re "(?i)state or province" { send "Tehran\r"; exp_continue }
+            -re "(?i)city or locality" { send "Tehran\r"; exp_continue }
+            -re "(?i)organization\\b" { send "Aegis\r"; exp_continue }
+            -re "(?i)organizational unit" { send "Aegis\r"; exp_continue }
+            -re "(?i)first and last name" { send "Aegis\r"; exp_continue }
+            -re "(?i)correct.*\\(y/n\\)" { send "yes\r"; exp_continue }
+            -re "\\? " { send "\r"; exp_continue }
+            timeout { puts "TIMEOUT - no more prompts matched"; exit 1 }
             eof
           }
           EOF
-          chmod +x build.exp
-          ./build.exp 2>&1 | tee build-output.log
+          chmod +x init.exp
+          ./init.exp 2>&1 | tee ../build-output.log
+          echo "--- checking for gradlew ---"
+          ls -la
+          if [ -f "./gradlew" ]; then
+            echo "gradlew found, building release APK directly"
+            ./gradlew assembleRelease --stacktrace 2>&1 | tee -a ../build-output.log
+          fi
 
       - name: List output files
-        run: find . -maxdepth 2 -iname "*.apk" -o -iname "*.aab" || true
+        run: find . -maxdepth 4 -iname "*.apk" -o -iname "*.aab" || true
 
       - name: Commit build log back to repo
         if: always()
@@ -81,6 +88,6 @@ jobs:
         with:
           name: aegis-apk
           path: |
-            *.apk
-            *.aab
+            **/*.apk
+            **/*.aab
           if-no-files-found: warn
