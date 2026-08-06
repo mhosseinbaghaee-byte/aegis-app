@@ -9,6 +9,7 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
 
@@ -36,54 +37,118 @@ jobs:
           }
           EOF
 
-      - name: Init + Build APK with Bubblewrap (fully automated)
-        id: build
+      - name: Init APK project with Bubblewrap (loop-safe)
+        id: init
         continue-on-error: true
+        timeout-minutes: 6
         run: |
           mkdir -p android-build
           cd android-build
           cat > init.exp << 'EOF'
           #!/usr/bin/expect -f
-          set timeout 900
+          set timeout 60
           log_user 1
+          set counter 0
+          set max_steps 60
           spawn bubblewrap init --manifest https://mhosseinbaghaee-byte.github.io/aegis-app/manifest.json
           expect {
-            -re "(?i)regenerate.*\\(Y/n\\)" { send "no\r"; exp_continue }
-            -re "(?i)assword" { send "password123\r"; exp_continue }
-            -re "(?i)country code" { send "IR\r"; exp_continue }
-            -re "(?i)state or province" { send "Tehran\r"; exp_continue }
-            -re "(?i)city or locality" { send "Tehran\r"; exp_continue }
-            -re "(?i)organization\\b" { send "Aegis\r"; exp_continue }
-            -re "(?i)organizational unit" { send "Aegis\r"; exp_continue }
-            -re "(?i)first and last name" { send "Aegis\r"; exp_continue }
-            -re "(?i)correct.*\\(y/n\\)" { send "yes\r"; exp_continue }
-            -re "\\? " { send "\r"; exp_continue }
-            timeout { puts "TIMEOUT - no more prompts matched"; exit 1 }
-            eof
+            -re "(?i)regenerate.*\\(Y/n\\)" {
+              incr counter
+              if {$counter > $max_steps} { puts "LOOP_GUARD_TRIGGERED"; exit 2 }
+              send "no\r"; exp_continue
+            }
+            -re "(?i)assword" {
+              incr counter
+              if {$counter > $max_steps} { puts "LOOP_GUARD_TRIGGERED"; exit 2 }
+              send "password123\r"; exp_continue
+            }
+            -re "(?i)country code" {
+              incr counter
+              if {$counter > $max_steps} { puts "LOOP_GUARD_TRIGGERED"; exit 2 }
+              send "IR\r"; exp_continue
+            }
+            -re "(?i)state or province" {
+              incr counter
+              if {$counter > $max_steps} { puts "LOOP_GUARD_TRIGGERED"; exit 2 }
+              send "Tehran\r"; exp_continue
+            }
+            -re "(?i)city or locality" {
+              incr counter
+              if {$counter > $max_steps} { puts "LOOP_GUARD_TRIGGERED"; exit 2 }
+              send "Tehran\r"; exp_continue
+            }
+            -re "(?i)organizational unit" {
+              incr counter
+              if {$counter > $max_steps} { puts "LOOP_GUARD_TRIGGERED"; exit 2 }
+              send "Aegis\r"; exp_continue
+            }
+            -re "(?i)organization\\b" {
+              incr counter
+              if {$counter > $max_steps} { puts "LOOP_GUARD_TRIGGERED"; exit 2 }
+              send "Aegis\r"; exp_continue
+            }
+            -re "(?i)first and last name" {
+              incr counter
+              if {$counter > $max_steps} { puts "LOOP_GUARD_TRIGGERED"; exit 2 }
+              send "Aegis\r"; exp_continue
+            }
+            -re "(?i)correct.*\\(y/n\\)" {
+              incr counter
+              if {$counter > $max_steps} { puts "LOOP_GUARD_TRIGGERED"; exit 2 }
+              send "yes\r"; exp_continue
+            }
+            -re "\\? " {
+              incr counter
+              if {$counter > $max_steps} { puts "LOOP_GUARD_TRIGGERED"; exit 2 }
+              send "\r"; exp_continue
+            }
+            timeout { puts "PROMPT_TIMEOUT_60S"; exit 3 }
+            eof { puts "REACHED_EOF_NORMALLY" }
           }
           EOF
           chmod +x init.exp
           ./init.exp 2>&1 | tee ../build-output.log
-          echo "--- checking for gradlew ---"
-          ls -la
-          if [ -f "./gradlew" ]; then
-            echo "gradlew found, building release APK directly"
-            ./gradlew assembleRelease --stacktrace 2>&1 | tee -a ../build-output.log
-          fi
+          echo "EXIT_CODE_OF_EXPECT: ${PIPESTATUS[0]}" | tee -a ../build-output.log
+          echo "--- ls after init ---" | tee -a ../build-output.log
+          ls -la | tee -a ../build-output.log
 
-      - name: List output files
-        run: find . -maxdepth 4 -iname "*.apk" -o -iname "*.aab" || true
-
-      - name: Commit build log back to repo
+      - name: Commit progress log (checkpoint 1)
         if: always()
         run: |
           git config user.name "aegis-bot"
           git config user.email "bot@aegis.local"
           git add build-output.log
-          git commit -m "Add build log [skip ci]" || echo "nothing to commit"
+          git commit -m "checkpoint: init log [skip ci]" || echo "nothing to commit"
+          git push || echo "push failed"
+
+      - name: Build APK if gradlew exists
+        if: always()
+        continue-on-error: true
+        timeout-minutes: 8
+        run: |
+          cd android-build
+          if [ -f "./gradlew" ]; then
+            echo "gradlew found, building release APK"
+            ./gradlew assembleRelease --stacktrace 2>&1 | tee -a ../build-output.log
+          else
+            echo "NO_GRADLEW_FOUND" | tee -a ../build-output.log
+          fi
+
+      - name: List output files
+        if: always()
+        run: find . -maxdepth 4 -iname "*.apk" -o -iname "*.aab" || true
+
+      - name: Commit final build log
+        if: always()
+        run: |
+          git config user.name "aegis-bot"
+          git config user.email "bot@aegis.local"
+          git add build-output.log
+          git commit -m "Final build log [skip ci]" || echo "nothing to commit"
           git push || echo "push failed"
 
       - name: Upload APK artifact
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: aegis-apk
