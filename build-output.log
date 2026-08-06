@@ -35,3 +35,4 @@ total 12
 drwxr-xr-x 2 runner runner 4096 Aug  6 09:05 .
 drwxr-xr-x 5 runner runner 4096 Aug  6 09:05 ..
 -rwxr-xr-x 1 runner runner 1810 Aug  6 09:05 init.exp
+NO_GRADLEW_FOUND
