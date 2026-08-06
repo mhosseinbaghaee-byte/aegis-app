@@ -1,0 +1,1864 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#08090b">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="آگیس AI">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="application-name" content="آگیس AI">
+<meta name="description" content="دستیار هوشمند سخت‌گیر تحلیل بازار - مدیریت ریسک ساختاری">
+<meta name="msapplication-TileColor" content="#08090b">
+
+<title>آگیس AI · نسخه ۱۹ | پایدار و سخت‌گیر</title>
+
+
+
+
+
+<!-- آیکون قوی با data-URI (برای Add to Home Screen) -->
+<link rel="apple-touch-icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' rx='110' fill='%2308090b'/><path d='M110 350 L200 260 L270 310 L400 160' stroke='%23f2b544' stroke-width='36' stroke-linecap='round' stroke-linejoin='round' fill='none'/><path d='M330 160 H400 V230' stroke='%23f2b544' stroke-width='36' stroke-linecap='round' stroke-linejoin='round' fill='none'/><circle cx='400' cy='160' r='18' fill='%23f2b544'/></svg>">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' rx='110' fill='%2308090b'/><path d='M110 350 L200 260 L270 310 L400 160' stroke='%23f2b544' stroke-width='36' stroke-linecap='round' stroke-linejoin='round' fill='none'/><path d='M330 160 H400 V230' stroke='%23f2b544' stroke-width='36' stroke-linecap='round' stroke-linejoin='round' fill='none'/></svg>">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
+
+<script>
+  if (localStorage.getItem("aegis_theme") === "light") {
+    document.documentElement.classList.add("light-theme");
+  }
+</script>
+
+<style>
+@font-face {
+  font-family: 'IranianSans';
+  src: url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/fonts/webfonts/Vazirmatn-Regular.woff2') format('woff2');
+  font-weight: 400; font-style: normal;
+}
+@font-face {
+  font-family: 'IranianSans';
+  src: url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/fonts/webfonts/Vazirmatn-Bold.woff2') format('woff2');
+  font-weight: 700; font-style: normal;
+}
+
+:root {
+  --bg: #08090b; --card: #131418; --card-2: #1a1c21; --border: #24262c;
+  --text: #f2f2f3; --muted: #8b8f98; --gold: #f2b544; --gold-dark: #c98a1f;
+  --green: #22c55e; --red: #ef4444; --nav-bg: rgba(10, 11, 13, 0.96);
+  --font-family: 'IranianSans', 'Iranian Sans', Tahoma, sans-serif;
+}
+
+html.light-theme, body.light-theme {
+  --bg: #f4f5f8; --card: #ffffff; --card-2: #f0f2f5; --border: #e1e4e8;
+  --text: #1a1d20; --muted: #6c757d; --gold: #d99b26; --gold-dark: #a87315;
+  --green: #16a34a; --red: #dc2626; --nav-bg: rgba(255, 255, 255, 0.96);
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  background: var(--bg); color: var(--text); font-family: var(--font-family);
+  padding-bottom: 88px; transition: background-color 0.25s, color 0.25s;
+}
+
+.app { max-width: 460px; margin: 0 auto; padding: 20px 18px 10px; }
+
+.topbar { position: relative; display: flex; justify-content: space-between; align-items: center; padding-bottom: 22px; }
+.icon-btn {
+  width: 42px; height: 42px; border-radius: 12px; background: var(--card);
+  border: 1px solid var(--border); color: var(--muted); display: flex;
+  align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s;
+  font-size: 18px;
+}
+.icon-btn:hover { border-color: var(--gold); color: var(--text); }
+
+.aegis-signature-container { margin-top: 24px; padding-top: 16px; border-top: 1px dashed var(--border); text-align: center; }
+.aegis-signature-text { margin: 0 0 6px; font-size: 12px; color: var(--muted); }
+.aegis-signature-link { color: var(--gold); text-decoration: none; font-weight: 700; transition: opacity .2s ease, text-shadow .2s ease; }
+.aegis-signature-link:hover { opacity: .85; text-shadow: 0 0 8px rgba(242,181,68,0.4); }
+.aegis-signature-version { font-size: 11px; color: var(--muted); opacity: .6; display: block; margin-top: 4px; }
+.brand { display: flex; flex-direction: column; align-items: flex-end; text-align: right; }
+.brand-title { display: flex; align-items: center; justify-content: flex-end; gap: 10px; }
+.brand-ai { font-size: 30px; font-weight: 800; color: var(--text); letter-spacing: 1px; }
+.brand-name { font-size: 30px; font-weight: 800; color: var(--gold); }
+.brand-sub { color: var(--muted); font-size: 13.5px; margin: 6px 0 0; }
+
+.card {
+  background: var(--card); border: 1px solid var(--border); border-radius: 18px;
+  padding: 18px; margin-bottom: 16px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+.label-row { display: flex; justify-content: space-between; align-items: center; margin: 16px 0 8px; }
+.card label { color: var(--muted); font-size: 13px; margin: 0; }
+.card .label-row:first-child { margin-top: 0; }
+
+.info-icon {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 18px; height: 18px; border-radius: 50%; border: 1.2px solid var(--muted);
+  color: var(--muted); font-size: 11px; font-weight: 700; cursor: pointer;
+  transition: all 0.2s; font-family: sans-serif;
+}
+.info-icon:hover { border-color: var(--gold); color: var(--gold); background: rgba(242, 181, 68, 0.1); }
+
+.input-wrap { position: relative; }
+.input-wrap input, .input-wrap select {
+  width: 100%; padding: 14px 44px 14px 14px; border: 1px solid var(--border);
+  border-radius: 12px; background: var(--card-2); color: var(--text); font-size: 16px;
+  direction: ltr; text-align: right; font-family: var(--font-family); transition: border-color 0.2s;
+}
+.input-wrap input:focus, .input-wrap select:focus { outline: none; border-color: var(--gold); }
+.input-icon { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); color: var(--gold); pointer-events: none; }
+
+.input-with-btn { display: flex; gap: 8px; }
+.input-with-btn .input-wrap { flex: 1; }
+.btn-small {
+  background: var(--card-2); border: 1px solid var(--border); color: var(--gold);
+  border-radius: 12px; padding: 0 14px; font-size: 12px; font-weight: 700;
+  cursor: pointer; white-space: nowrap; font-family: var(--font-family);
+  transition: all 0.2s;
+}
+.btn-small:hover { border-color: var(--gold); background: rgba(242, 181, 68, 0.1); }
+.btn-small:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.advanced-toggle {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-top: 16px; padding: 10px 2px; color: var(--muted); font-size: 12.5px;
+  cursor: pointer; user-select: none;
+}
+.advanced-toggle svg { transition: transform .2s; color: var(--muted); }
+.advanced-toggle.open svg { transform: rotate(180deg); }
+.advanced-fields { display: none; border-top: 1px dashed var(--border); padding-top: 4px; margin-top: 2px; }
+.advanced-fields.open { display: block; }
+
+.check-row {
+  display: flex !important; align-items: center; justify-content: space-between;
+  margin: 14px 0 0 !important; color: var(--text); font-size: 13.5px; cursor: pointer;
+}
+.check-left { display: flex; align-items: center; gap: 9px; }
+.check-row input { width: auto; accent-color: var(--gold); }
+
+.analyze-btn {
+  width: 100%; margin-top: 22px; padding: 16px; border: none; border-radius: 14px; cursor: pointer;
+  background: linear-gradient(180deg, var(--gold), var(--gold-dark)); color: #1a1305; font-size: 17px;
+  font-weight: 800; font-family: var(--font-family); display: flex; align-items: center; justify-content: center; gap: 9px;
+  transition: transform 0.1s, box-shadow 0.2s;
+}
+.analyze-btn:active { transform: translateY(1px); }
+.analyze-btn.secondary {
+  background: var(--card-2); color: var(--text); border: 1px solid var(--border);
+  margin-top: 10px;
+}
+.analyze-btn.secondary:hover { border-color: var(--gold); }
+
+#chartCard { padding: 12px; overflow: hidden; }
+.timeframe-bar { display: flex; justify-content: center; gap: 6px; margin-bottom: 12px; }
+.tf-btn {
+  background: var(--card-2); border: 1px solid var(--border); color: var(--muted);
+  padding: 6px 14px; border-radius: 8px; font-size: 12px; font-weight: 700; cursor: pointer;
+  transition: all 0.2s; font-family: var(--font-family);
+}
+.tf-btn.active, .tf-btn:hover { background: var(--gold); color: #1a1305; border-color: var(--gold); }
+.chart-box { width: 100%; height: 350px; position: relative; border-radius: 12px; overflow: hidden; }
+
+.news-container { display: flex; flex-direction: column; gap: 10px; max-height: 400px; overflow-y: auto; padding-left: 4px; }
+.news-item {
+  background: var(--card-2); border: 1px solid var(--border); border-radius: 12px;
+  padding: 12px 14px; text-decoration: none; color: var(--text); display: block;
+  transition: transform 0.2s, border-color 0.2s; position: relative;
+}
+.news-item:hover { border-color: var(--gold); transform: translateY(-2px); }
+.news-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+.news-source { font-size: 11px; font-weight: 700; color: var(--gold); background: rgba(242, 181, 68, 0.1); padding: 2px 8px; border-radius: 6px; }
+.news-date { font-size: 10.5px; color: var(--muted); }
+.news-title { font-size: 13px; font-weight: 700; line-height: 1.6; margin: 0; color: var(--text); }
+.news-footer { margin-top: 8px; font-size: 11px; color: var(--muted); display: flex; align-items: center; gap: 4px; }
+
+.hidden { display: none !important; }
+.section-title { font-size: 15px; margin: 0 0 16px; font-weight: 700; }
+.section-title.gold { color: var(--gold); text-align: right; }
+
+.score-card { text-align: center; }
+.score-row { display: flex; align-items: center; justify-content: space-between; gap: 14px; }
+.gauge { position: relative; width: 140px; height: 140px; flex-shrink: 0; }
+.gauge svg { transform: rotate(-90deg); }
+.gauge-track { fill: none; stroke: var(--card-2); stroke-width: 11; }
+.gauge-fill {
+  fill: none; stroke: var(--gold); stroke-width: 11; stroke-linecap: round;
+  stroke-dasharray: 376.99; stroke-dashoffset: 376.99; transition: stroke-dashoffset 1s ease;
+}
+.gauge-center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.gauge-score { font-size: 34px; font-weight: 800; color: var(--gold); direction: ltr; }
+.gauge-max { font-size: 12.5px; color: var(--muted); margin-top: 2px; }
+
+.status-box { flex: 1; background: var(--card-2); border: 1px solid var(--border); border-radius: 14px; padding: 14px; text-align: center; }
+.status { font-size: 15px; font-weight: 800; display: flex; align-items: center; justify-content: center; gap: 7px; }
+.status::before { content: ''; width: 9px; height: 9px; border-radius: 50%; background: var(--muted); }
+.status.buy { color: var(--green); } .status.buy::before { background: var(--green); }
+.status.wait { color: var(--gold); } .status.wait::before { background: var(--gold); }
+.status.reject { color: var(--red); } .status.reject::before { background: var(--red); }
+.status-desc { color: var(--text); font-size: 12.5px; margin: 10px 0 0; line-height: 1.8; opacity: 0.9; }
+
+.trade-levels-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 10px; }
+.level-box { background: var(--card-2); border: 1px solid var(--border); border-radius: 12px; padding: 12px; text-align: center; }
+.level-box.sl { border-color: rgba(239, 68, 68, 0.4); }
+.level-box.tp { border-color: rgba(34, 197, 94, 0.4); }
+.level-title { font-size: 12px; color: var(--muted); margin-bottom: 4px; }
+.level-value { font-size: 16px; font-weight: 800; direction: ltr; }
+.level-box.sl .level-value { color: var(--red); }
+.level-box.tp .level-value { color: var(--green); }
+
+.rationale-box { background: var(--card-2); border-radius: 12px; padding: 12px 14px; margin-top: 12px; border-right: 3px solid var(--gold); }
+.rationale-title { font-size: 13px; font-weight: 700; color: var(--gold); margin-bottom: 6px; }
+.rationale-text { font-size: 12.5px; color: var(--text); line-height: 1.7; opacity: 0.9; margin: 0; }
+
+.pos-size-box {
+  background: var(--card-2); border-radius: 12px; padding: 14px; margin-top: 12px;
+  border: 1px solid var(--border);
+}
+.pos-size-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+.pos-size-grid label { font-size: 12px; color: var(--muted); display: block; margin-bottom: 4px; }
+.pos-size-grid input {
+  width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 10px;
+  background: var(--card); color: var(--text); font-size: 14px; direction: ltr; text-align: right;
+  font-family: var(--font-family);
+}
+.pos-result {
+  margin-top: 12px; padding: 10px; background: rgba(242, 181, 68, 0.08);
+  border-radius: 10px; text-align: center; font-size: 14px; font-weight: 700; color: var(--gold);
+}
+
+.reasons-list { list-style: none; margin: 0; padding: 0; }
+.reasons-list li { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 14px 0; border-bottom: 1px solid var(--border); font-size: 13.5px; }
+.reasons-list li:last-child { border-bottom: none; padding-bottom: 2px; }
+.reason-icon { width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.reason-icon.ok { background: rgba(34, 197, 94, 0.16); color: var(--green); }
+.reason-icon.warn { background: rgba(242, 181, 68, 0.16); color: var(--gold); }
+.reason-icon.bad { background: rgba(239, 68, 68, 0.16); color: var(--red); }
+
+.disclaimer-card {
+  background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border); border-radius: 14px;
+  padding: 12px 14px; margin-top: 16px; display: flex; gap: 10px; align-items: flex-start;
+}
+.disclaimer-icon { color: var(--gold); flex-shrink: 0; margin-top: 2px; }
+.disclaimer-text { font-size: 11.5px; color: var(--muted); line-height: 1.7; margin: 0; }
+
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+.history-item {
+  background: var(--card-2); border: 1px solid var(--border); border-radius: 14px;
+  padding: 14px; margin-bottom: 10px; cursor: pointer; transition: border-color 0.2s;
+}
+.history-item:hover { border-color: var(--gold); }
+.history-top { display: flex; align-items: center; justify-content: space-between; }
+.history-sym { font-weight: 800; font-size: 16px; color: var(--gold); }
+.history-date { font-size: 11px; color: var(--muted); margin-top: 3px; }
+.history-score { font-size: 18px; font-weight: 800; color: var(--text); direction: ltr; }
+.history-details { font-size: 12px; color: var(--muted); margin-top: 8px; line-height: 1.6; display: none; }
+.history-item.expanded .history-details { display: block; }
+
+.outcome-row {
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;
+  margin-top: 12px; padding-top: 12px; border-top: 1px dashed var(--border); cursor: default;
+}
+.outcome-label { font-size: 11px; color: var(--muted); }
+.outcome-btns { display: flex; gap: 6px; }
+.outcome-btn {
+  font-family: var(--font-family); font-size: 11.5px; font-weight: 700; padding: 6px 10px;
+  border-radius: 8px; border: 1px solid var(--border); background: var(--card); color: var(--muted); cursor: pointer;
+}
+.outcome-btn.win.active { background: rgba(34,197,94,0.15); border-color: var(--green); color: var(--green); }
+.outcome-btn.loss.active { background: rgba(239,68,68,0.15); border-color: var(--red); color: var(--red); }
+.outcome-btn.be.active { background: rgba(139,148,158,0.15); border-color: var(--muted); color: var(--text); }
+
+.help-step { margin-bottom: 18px; border-bottom: 1px dashed var(--border); padding-bottom: 14px; scroll-margin-top: 20px; }
+.help-step:last-child { border-bottom: none; }
+.help-title { font-weight: 700; color: var(--gold); font-size: 14.5px; margin-bottom: 6px; }
+.help-desc { font-size: 13px; color: var(--text); opacity: 0.88; line-height: 1.8; margin: 0; }
+
+.btn-danger {
+  width: 100%; background: rgba(239, 68, 68, 0.15); color: var(--red); border: 1px solid var(--red);
+  padding: 12px; border-radius: 12px; font-weight: 700; cursor: pointer; margin-top: 10px; transition: all 0.2s;
+  font-family: var(--font-family);
+}
+.btn-danger:hover { background: var(--red); color: #fff; }
+
+.btn-outline {
+  width: 100%; background: transparent; color: var(--muted); border: 1px solid var(--border);
+  padding: 12px; border-radius: 12px; font-weight: 700; cursor: pointer; margin-top: 10px;
+  font-family: var(--font-family); transition: all 0.2s;
+}
+.btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+.bottom-nav {
+  position: fixed; bottom: 0; left: 0; right: 0; background: var(--nav-bg); backdrop-filter: blur(8px);
+  border-top: 1px solid var(--border); display: flex; justify-content: space-around; align-items: center;
+  padding: 8px 4px calc(8px + env(safe-area-inset-bottom)); z-index: 20;
+}
+.nav-item {
+  background: none; border: none; color: var(--muted); display: flex; flex-direction: column; align-items: center;
+  gap: 4px; font-size: 10px; font-family: var(--font-family); cursor: pointer; padding: 4px 6px; transition: color 0.2s;
+}
+.nav-item.active { color: var(--gold); }
+
+.toast {
+  position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%);
+  background: var(--card); border: 1px solid var(--gold); color: var(--text);
+  padding: 12px 20px; border-radius: 12px; font-size: 13px; z-index: 100;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3); opacity: 0; transition: opacity 0.3s;
+  pointer-events: none; max-width: 90%; text-align: center;
+}
+.toast.show { opacity: 1; }
+
+.error-msg {
+  color: var(--red); font-size: 12px; margin-top: 6px; display: none;
+}
+.error-msg.show { display: block; }
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <!-- هدر -->
+  <header class="topbar">
+    <button class="icon-btn" id="themeToggleBtn" title="تغییر تم">🌙</button>
+    <div class="brand">
+      <div class="brand-title">
+        <span class="brand-ai">AI</span>
+        <span class="brand-name">آگیس</span>
+        <svg class="brand-shield" viewBox="0 0 24 24" width="30" height="30">
+          <path d="M12 2 L20 5.5 V11 C20 16 16.5 20 12 22 C7.5 20 4 16 4 11 V5.5 Z" fill="url(#shieldGrad)" stroke="#c98a1f" stroke-width="1"/>
+          <path d="M8.5 12 L11 14.5 L16 9" fill="none" stroke="#1a1305" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          <defs>
+            <linearGradient id="shieldGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#f6cd6e"/>
+              <stop offset="1" stop-color="#c98a1f"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+      <p class="brand-sub">دستیار سخت‌گیر پایدار · نسخه ۱۹</p>
+
+
+<div id="sessionBadge" style="display:inline-block;margin-top:6px;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;background:rgba(242,181,68,0.12);color:var(--gold);">در حال تشخیص سشن...</div>
+<div id="spreadWarning" style="display:none;margin-top:6px;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;background:rgba(239,68,68,0.12);color:var(--red);"></div>
+
+
+    </div>
+  </header>
+
+  <!-- ================= TAB 1: خانه ================= -->
+  <main id="tab-home" class="tab-content active">
+    <section class="card">
+      <div class="label-row">
+        <label for="symbol">نماد سهم، ارز یا جفت‌ارز</label>
+        <span class="info-icon" onclick="goToHelp('help-symbol')" title="راهنما">i</span>
+      </div>
+      <div class="input-wrap">
+        <svg class="input-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.6l-5.9 3 1.2-6.5-4.8-4.6 6.6-.9z" stroke-linejoin="round"/>
+        </svg>
+        <input id="symbol" placeholder="مثلا BTCUSDT یا NVDA یا EURUSD" autocapitalize="characters" autocomplete="off">
+      </div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;">
+        <button type="button" class="btn-small fav-sym" data-sym="EURUSD">EURUSD</button>
+        <button type="button" class="btn-small fav-sym" data-sym="GBPUSD">GBPUSD</button>
+        <button type="button" class="btn-small fav-sym" data-sym="USDJPY">USDJPY</button>
+        <button type="button" class="btn-small fav-sym" data-sym="XAUUSD">XAUUSD</button>
+        <button type="button" class="btn-small fav-sym" data-sym="BTCUSDT">BTCUSDT</button>
+      </div>
+
+      <div class="label-row" style="margin-bottom:6px;">
+        <label>جهت معامله</label>
+      </div>
+      <div style="display:flex;gap:8px;margin-bottom:8px;">
+        <button type="button" class="btn-small dir-btn active" id="dirLong" data-dir="long" style="flex:1;padding:10px;">خرید (Long)</button>
+        <button type="button" class="btn-small dir-btn" id="dirShort" data-dir="short" style="flex:1;padding:10px;">فروش (Short)</button>
+      </div>
+      <input type="hidden" id="tradeDirection" value="long">
+
+      <div class="label-row">
+        <label for="price">قیمت ورود فعلی</label>
+        <span class="info-icon" onclick="goToHelp('help-price')" title="راهنما">i</span>
+      </div>
+      <div class="input-with-btn">
+        <div class="input-wrap">
+          <svg class="input-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M3 17l6-6 4 4 8-9" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M15 6h6v6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <input id="price" placeholder="قیمت دقیق ورود" type="number" inputmode="decimal" step="any">
+        </div>
+        <button type="button" class="btn-small" id="fetchPriceBtn" title="دریافت قیمت لحظه‌ای (کریپتو)">قیمت لحظه‌ای</button>
+      </div>
+      <div class="error-msg" id="priceError"></div>
+
+      <div class="label-row">
+        <label for="stopLossPrice">قیمت حد ضرر ساختاری</label>
+        <span class="info-icon" onclick="goToHelp('help-sl')" title="راهنمای حد ضرر ساختاری">i</span>
+      </div>
+      <div class="input-wrap">
+        <svg class="input-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8">
+          <circle cx="12" cy="12" r="9"/><path d="M15 9l-6 6M9 9l6 6" stroke-linecap="round"/>
+        </svg>
+        <input id="stopLossPrice" placeholder="خرید: زیر کف · فروش: بالای سقف" type="number" inputmode="decimal" step="any">
+      </div>
+      <div class="error-msg" id="slError"></div>
+
+      <div class="advanced-toggle" id="advToggle">
+        <span>پارامترهای فنی، اندیکاتوری و فاندامنتال (چک‌لیست شکاک)</span>
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+
+      <div class="advanced-fields" id="advFields">
+        <div class="label-row">
+          <label for="rsi">مقدار عددی RSI (۰ تا ۱۰۰)</label>
+          <span class="info-icon" onclick="goToHelp('help-rsi')" title="راهنما">i</span>
+        </div>
+        <div class="input-wrap">
+          <input id="rsi" placeholder="مثلا ۵۲" type="number" inputmode="decimal" min="0" max="100" step="0.1">
+        </div>
+        <div class="error-msg" id="rsiError"></div>
+
+        <div class="check-row">
+          <div class="check-left">
+            <input type="checkbox" id="aboveSma50" checked>
+            <span>قیمت بالاتر از میانگین متحرک ۵۰ (روند صعودی معتبر)</span>
+          </div>
+          <span class="info-icon" onclick="goToHelp('help-sma')" title="راهنما">i</span>
+        </div>
+
+        <div class="check-row">
+          <div class="check-left">
+            <input type="checkbox" id="breakout">
+            <span id="breakoutLabel">شکست معتبر مقاومت مهم (Breakout)</span>
+          </div>
+          <span class="info-icon" onclick="goToHelp('help-breakout')" title="راهنما">i</span>
+        </div>
+
+        <div class="check-row">
+          <div class="check-left">
+            <input type="checkbox" id="macdBullish">
+            <span id="macdLabel">کراس مکدی صعودی در ناحیه امن</span>
+          </div>
+          <span class="info-icon" onclick="goToHelp('help-macd')" title="راهنما">i</span>
+        </div>
+
+        <div class="check-row">
+          <div class="check-left">
+            <input type="checkbox" id="volume">
+            <span id="volumeLabel">حجم معاملات بالا و تاییدکننده کندل صعودی</span>
+          </div>
+          <span class="info-icon" onclick="goToHelp('help-volume')" title="راهنما">i</span>
+        </div>
+
+        <div class="check-row">
+          <div class="check-left">
+            <input type="checkbox" id="fundamental">
+            <span>خبر یا کاتالیزور فاندامنتال قوی موافق</span>
+          </div>
+          <span class="info-icon" onclick="goToHelp('help-fundamental')" title="راهنما">i</span>
+        </div>
+
+        <div class="check-row">
+          <div class="check-left">
+            <input type="checkbox" id="newsToday">
+            <span>امروز خبر مهم اقتصادی/تقویم دارم (نوسان‌ساز)</span>
+          </div>
+          <span class="info-icon" onclick="goToHelp('help-news')" title="راهنما">i</span>
+        </div>
+      </div>
+
+      <div id="revengeWarning" class="hidden" style="margin-top:16px;padding:12px 14px;border-radius:12px;background:rgba(239,68,68,0.1);border:1px solid var(--red);color:var(--red);font-size:12.5px;line-height:1.9;text-align:center;"></div>
+
+      <button id="analyzeBtn" class="analyze-btn">
+        <span>تحلیل سخت‌گیرانه بازار</span>
+        <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2.2">
+          <circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3" stroke-linecap="round"/>
+        </svg>
+      </button>
+      <button id="clearFormBtn" class="analyze-btn secondary">پاک کردن فرم و شروع مجدد</button>
+    </section>
+
+    <!-- نتیجه تحلیل -->
+    <section id="result" class="result hidden">
+      <div class="card score-card">
+        <h2 class="section-title gold">امتیاز عیار سنجش آگیس</h2>
+        <div class="score-row">
+          <div class="gauge">
+            <svg viewBox="0 0 140 140" width="140" height="140">
+              <circle cx="70" cy="70" r="60" class="gauge-track"/>
+              <circle cx="70" cy="70" r="60" class="gauge-fill" id="gaugeFill"/>
+            </svg>
+            <div class="gauge-center">
+              <div class="gauge-score" id="score">--</div>
+              <div class="gauge-max">از ۱۰</div>
+            </div>
+          </div>
+
+          <div class="status-box">
+            <div id="status" class="status">منتظر بررسی</div>
+            <p id="statusDesc" class="status-desc">برای گرفتن تاییدیه ترید، دکمه تحلیل را بزنید.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" id="riskRewardCard">
+        <h3 class="section-title gold">مدیریت ریسک ساختاری و اهداف</h3>
+        <div class="trade-levels-grid">
+          <div class="level-box sl">
+            <div class="level-title">حد ضرر (SL ساختاری)</div>
+            <div class="level-value" id="slVal">---</div>
+          </div>
+          <div class="level-box tp">
+            <div class="level-title">حد سود اول (TP1 · ۱:۲)</div>
+            <div class="level-value" id="tp1Val">---</div>
+          </div>
+          <div class="level-box tp">
+            <div class="level-title">حد سود دوم (TP2 · ۱:۳)</div>
+            <div class="level-value" id="tp2Val">---</div>
+          </div>
+          <div class="level-box">
+            <div class="level-title">نسبت ریسک به ریوارد</div>
+            <div class="level-value" style="color: var(--gold);" id="rrVal">--</div>
+          </div>
+        </div>
+
+        <div class="rationale-box">
+          <div class="rationale-title">🔍 عیارسنجی ریسک (دیدگاه تریدر شکاک)</div>
+          <p class="rationale-text" id="rationaleText">...</p>
+        </div>
+
+        <!-- ماشین‌حساب سایز پوزیشن پیشرفته -->
+        <div class="pos-size-box">
+          <div class="rationale-title" style="margin-bottom:8px;">📐 محاسبه حجم پوزیشن (ریسک‌محور)</div>
+          
+          <div style="display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap;">
+            <button type="button" class="btn-small risk-preset" data-pct="0.5">۰.۵٪</button>
+            <button type="button" class="btn-small risk-preset" data-pct="1">۱٪</button>
+            <button type="button" class="btn-small risk-preset" data-pct="1.5">۱.۵٪</button>
+            <button type="button" class="btn-small risk-preset" data-pct="2">۲٪</button>
+          </div>
+
+          <div class="pos-size-grid">
+            <div>
+              <label for="accountRisk">ریسک دلاری</label>
+              <input id="accountRisk" type="number" inputmode="decimal" placeholder="مثلا ۱۰" step="any">
+            </div>
+            <div>
+              <label for="riskPercent">درصد ریسک (%)</label>
+              <input id="riskPercent" type="number" inputmode="decimal" placeholder="۱" step="0.1" min="0.1" max="5">
+            </div>
+          </div>
+          <div style="margin-top:10px;">
+            <label for="accountSize" style="font-size:12px;color:var(--muted);">موجودی حساب (دلار)</label>
+            <input id="accountSize" type="number" inputmode="decimal" placeholder="مثلا ۱۰۰۰" step="any" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:10px;background:var(--card);color:var(--text);font-size:14px;direction:ltr;text-align:right;font-family:var(--font-family);margin-top:4px;">
+          </div>
+          <div class="pos-result" id="posSizeResult">حجم پیشنهادی پوزیشن محاسبه خواهد شد</div>
+          <div id="riskWarning" style="display:none;margin-top:8px;padding:8px 10px;border-radius:8px;font-size:12px;background:rgba(239,68,68,0.12);color:var(--red);text-align:center;"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3 class="section-title gold">بررسی ریز دلایل و فیلترهای امنیتی</h3>
+        <ul id="reasons" class="reasons-list"></ul>
+        <button type="button" id="saveJournalBtn" class="analyze-btn secondary" style="margin-top:14px;">ثبت این تحلیل در ژورنال</button>
+        <p style="font-size:11.5px;color:var(--muted);text-align:center;margin:8px 0 0;">فقط وقتی واقعاً می‌خواهی معامله را دنبال کنی ثبت کن — هر تحلیل خودکار ذخیره نمی‌شود.</p>
+      </div>
+
+      <div class="disclaimer-card">
+        <svg class="disclaimer-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 9v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <p class="disclaimer-text">
+          <b>سلب مسئولیت سخت‌گیرانه:</b> آگیس ابزار کمکی ارزیابی احتمالاتی است. بازارهای مالی پر از ریسک پنهان هستند؛ مدیریت حجم سرمایه و پذیرش ریسک نهایی مستقیماً بر عهده شخص معامله‌گر است. هیچ‌گاه بیش از ۱–۲٪ از سرمایه خود را در یک معامله ریسک نکنید.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <!-- ================= TAB 2: چارت و اخبار ================= -->
+  <section id="tab-chart" class="tab-content">
+    <div class="card" id="chartCard">
+      <h3 class="section-title gold" style="margin-bottom:12px;">چارت تکنیکال پیشرفته</h3>
+      <p style="font-size:12px;color:var(--muted);margin:0 0 10px;text-align:center;" id="chartSymbolLabel">نماد فعلی: BTCUSDT</p>
+      <div class="timeframe-bar">
+        <button class="tf-btn" data-tf="60">1H</button>
+        <button class="tf-btn" data-tf="240">4H</button>
+        <button class="tf-btn active" data-tf="D">1D</button>
+        <button class="tf-btn" data-tf="W">1W</button>
+      </div>
+      <div class="chart-box">
+        <div id="tradingview_chart" style="width:100%; height:100%;"></div>
+      </div>
+      <button id="analyzeThisSymbolBtn" class="analyze-btn secondary" style="margin-top:12px;">📝 همین نماد رو تحلیل کن</button>
+    </div>
+
+    <div class="card">
+      <h3 class="section-title gold">اخبار و رویدادهای زنده بازار</h3>
+      <div id="news_container" class="news-container">
+        <p style="text-align: center; color: var(--muted); font-size: 13px;">در حال دریافت اخبار زنده...</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= TAB 3: سابقه ================= -->
+  <section id="tab-history" class="tab-content">
+    <div class="card" id="statsCard" style="display:none;">
+      <h3 class="section-title gold">آمار واقعی عملکرد</h3>
+      <div id="statsContent" style="font-size:13px;line-height:2.1;"></div>
+    </div>
+
+    <div class="card">
+      <h2 class="section-title gold">سابقه تحلیل‌های انجام‌شده</h2>
+      <p style="font-size:11.5px;color:var(--muted);margin:-6px 0 12px;">بعد از بسته شدن معامله، نتیجه‌ی واقعی رو رو هر ردیف ثبت کن تا آمار بالا دقیق بشه.</p>
+      <div id="historyContainer">
+        <p style="text-align: center; color: var(--muted); font-size: 13px;">هنوز هیچ تحلیلی ثبت نشده است.</p>
+      </div>
+      <button id="exportHistoryBtn" class="btn-outline" style="display:none;">خروجی JSON تاریخچه</button>
+      <button id="clearHistoryBtn" class="btn-danger">پاک کردن تاریخچه تحلیل‌ها</button>
+    </div>
+  </section>
+
+  <!-- ================= TAB 4: تنظیمات ================= -->
+  <section id="tab-settings" class="tab-content">
+    <div class="card">
+      <h2 class="section-title gold">تنظیمات ساده آگیس</h2>
+      <p style="font-size:12.5px;color:var(--muted);margin:0 0 14px;line-height:1.7;">این‌ها را یک‌بار تنظیم کن تا هر بار مجبور نباشی دوباره وارد کنی.</p>
+
+      <div class="label-row" style="margin-top:0;">
+        <label for="cfgAccountSize">موجودی حساب پیش‌فرض (دلار)</label>
+      </div>
+      <div class="input-wrap">
+        <input id="cfgAccountSize" type="number" value="1000" min="1" step="any">
+      </div>
+
+      <div class="label-row">
+        <label for="cfgDefaultRisk">ریسک پیش‌فرض هر معامله (%)</label>
+      </div>
+      <div class="input-wrap">
+        <input id="cfgDefaultRisk" type="number" value="1" min="0.1" max="5" step="0.1">
+      </div>
+      <p style="font-size:12px;color:var(--muted);margin:6px 0 0;">پیشنهاد برای تازه‌کارها: ۱٪ یا کمتر</p>
+
+      <div class="label-row">
+        <label for="cfgDailyMaxLoss">حداکثر ضرر روزانه (%)</label>
+      </div>
+      <div class="input-wrap">
+        <input id="cfgDailyMaxLoss" type="number" value="3" min="1" max="10" step="0.5">
+      </div>
+      <p style="font-size:12px;color:var(--muted);margin:6px 0 0;">اگر باخت‌های امروز به این حد برسد، آگیس هشدار می‌دهد</p>
+
+      <div class="label-row">
+        <label for="cfgThreshold">حد امتیاز برای ورود (از ۱۰)</label>
+      </div>
+      <div class="input-wrap">
+        <input id="cfgThreshold" type="number" value="7.5" min="1" max="10" step="0.5">
+      </div>
+
+      <div class="label-row">
+        <label for="cfgWait">حد امتیاز منطقه صبر (از ۱۰)</label>
+      </div>
+      <div class="input-wrap">
+        <input id="cfgWait" type="number" value="5.0" min="1" max="9" step="0.5">
+      </div>
+
+      <button id="saveSettingsBtn" class="analyze-btn" style="margin-top: 18px;">ذخیره تنظیمات</button>
+    </div>
+
+    <div class="card">
+      <h3 class="section-title gold">پشتیبان‌گیری</h3>
+      <p style="font-size:12px;color:var(--muted);margin:0 0 12px;">تنظیمات و تاریخچه را ذخیره یا بازیابی کن.</p>
+      <button id="exportAllBtn" class="analyze-btn secondary">⬇️ خروجی کامل</button>
+      <label for="importAllInput" class="analyze-btn secondary" style="display:flex;margin-top:10px;">⬆️ بازیابی از فایل</label>
+      <input type="file" id="importAllInput" accept="application/json" style="display:none;">
+    </div>
+
+    <div class="card">
+      <h3 class="section-title gold">درباره نسخه ۱۹</h3>
+      <p style="font-size:13px;line-height:1.8;color:var(--text);opacity:0.9;margin:0;">
+        • پشتیبانی خرید و فروش (Long / Short)<br>
+        • ژورنال دستی — هر تحلیل خودکار ذخیره نمی‌شود<br>
+        • محاسبه دقیق‌تر ضرر روزانه از روی ریسک واقعی<br>
+        • جریمه برای RSI ناقص + روند وابسته به جهت<br>
+        • تنظیمات پیش‌فرض حساب و حد ضرر روزانه<br>
+        • پایدارتر و مناسب استفاده واقعی
+      </p>
+      <a href="https://www.forexfactory.com/calendar" target="_blank" rel="noopener" style="display:block;margin-top:14px;text-align:center;padding:12px;border-radius:12px;background:rgba(242,181,68,0.1);color:var(--gold);font-weight:700;text-decoration:none;font-size:13px;">
+        📅 تقویم اقتصادی فارکس
+      </a>
+
+      <div class="aegis-signature-container">
+        <p class="aegis-signature-text">
+          طراحی و توسعه توسط
+          <a href="mailto:M.hosseinbaghaee@Gmail.com" class="aegis-signature-link">محمدحسین بقائی</a>
+        </p>
+        <span class="aegis-signature-version">Aegis AI · نسخه ۱۹</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= TAB 5: راهنما ================= -->
+  <section id="tab-help" class="tab-content">
+    <div class="card">
+      <h2 class="section-title gold">راهنمای سیستم تحلیل ساختاری آگیس</h2>
+      
+      <div class="help-step" id="help-symbol">
+        <div class="help-title">📌 درج استاندارد نمادها</div>
+        <p class="help-desc">کریپتو مثل <b>BTC</b> یا <b>BTCUSDT</b>، سهام آمریکا مثل <b>NVDA</b> یا <b>AAPL</b>، فارکس مثل <b>EURUSD</b> یا <b>FX:GBPUSD</b> و طلا مثل <b>XAUUSD</b> یا <b>GOLD</b>. سیستم به‌صورت خودکار فرمت TradingView را تشخیص می‌دهد.</p>
+      </div>
+
+      <div class="help-step" id="help-price">
+        <div class="help-title">🔍 قیمت ورود</div>
+        <p class="help-desc">قیمت دقیق برنامه‌ریزی‌شده برای ورود به معامله را وارد کنید. برای جفت‌ارزهای کریپتو می‌توانید از دکمه «قیمت لحظه‌ای» استفاده کنید تا قیمت فعلی از صرافی بایننس گرفته شود. این قیمت مبنای محاسبه فاصله ریسک و اهداف سود قرار می‌گیرد.</p>
+      </div>
+
+      <div class="help-step" id="help-sl">
+        <div class="help-title">🛑 حد ضرر ساختاری (Swing Low / SL)</div>
+        <p class="help-desc">برخلاف سیستم‌های سطحی مبتنی بر درصد دلخواه، در آگیس باید قیمت کف حمایتی قبلی یا نزدیک‌ترین Swing Low معتبر را به‌عنوان حد ضرر وارد کنید. این کار باعث می‌شود نسبت سود به ریسک (R/R) واقعی و منطبق با ساختار بازار محاسبه شود. حد ضرر باید حتماً پایین‌تر از قیمت ورود باشد.</p>
+      </div>
+
+      <div class="help-step" id="help-rsi">
+        <div class="help-title">📈 مکانیزم فیلتر RSI</div>
+        <p class="help-desc">RSI بین ۴۸ تا ۶۲ به‌عنوان محدوده مومنتوم امن در نظر گرفته می‌شود و امتیاز کامل می‌گیرد. RSI بالای ۷۰ به‌عنوان اشباع خرید خطرناک جریمه می‌شود. مقادیر خارج از این بازه‌ها امتیاز متوسط یا هشدار دریافت می‌کنند. RSI را از چارت یا اندیکاتور خود بخوانید و عدد دقیق را وارد کنید.</p>
+      </div>
+
+      <div class="help-step" id="help-sma">
+        <div class="help-title">📊 میانگین متحرک ۵۰ (SMA 50)</div>
+        <p class="help-desc">اگر قیمت زیر میانگین متحرک ۵۰ قرار داشته باشد، سیستم امنیتی آگیس معامله را «خلاف روند اصلی» تشخیص می‌دهد و امتیاز کلی را به‌شدت جریمه می‌کند. این فیلتر برای جلوگیری از ورودهای هیجانی در روند نزولی طراحی شده است. فقط زمانی این گزینه را تیک بزنید که قیمت واقعاً بالاتر از SMA50 باشد.</p>
+      </div>
+
+      <div class="help-step" id="help-breakout">
+        <div class="help-title">🚀 شکست مقاومت معتبر (Breakout)</div>
+        <p class="help-desc">شکست زمانی معتبر است که قیمت با حجم مناسب از یک سطح مقاومت مهم عبور کند و حداقل یک کندل تأییدیه بالای آن سطح بسته شود. شکست‌های جعلی (Fakeout) رایج هستند؛ بنابراین فقط زمانی این گزینه را فعال کنید که شکست از نظر حجمی و ساختاری تأیید شده باشد.</p>
+      </div>
+
+      <div class="help-step" id="help-macd">
+        <div class="help-title">📉 کراس مکدی صعودی</div>
+        <p class="help-desc">کراس صعودی مکدی زمانی رخ می‌دهد که خط MACD از زیر خط سیگنال عبور کند. ترجیحاً این کراس باید در ناحیه نزدیک به صفر یا کمی منفی رخ دهد (نه در ناحیه اشباع خرید خیلی بالا). کراس در ناحیه امن امتیاز مثبت قابل توجهی دارد.</p>
+      </div>
+
+      <div class="help-step" id="help-volume">
+        <div class="help-title">📦 حجم معاملات تأییدکننده</div>
+        <p class="help-desc">حجم بالا در کندل‌های صعودی یا در لحظه شکست مقاومت، اعتبار حرکت را افزایش می‌دهد. حجم پایین در حرکات صعودی اغلب نشانه ضعف و احتمال بازگشت است. این فیلتر را فقط زمانی تیک بزنید که حجم نسبت به میانگین اخیر به‌طور محسوسی بالاتر باشد.</p>
+      </div>
+
+      <div class="help-step" id="help-fundamental">
+        <div class="help-title">📰 کاتالیزور فاندامنتال</div>
+        <p class="help-desc">وجود خبر مثبت قوی، گزارش مالی بهتر از انتظار، رویداد کلان اقتصادی موافق یا هر کاتالیزور بنیادی که از سناریوی صعودی حمایت کند. این فیلتر امتیاز اضافی می‌دهد اما به تنهایی جایگزین تحلیل تکنیکال و مدیریت ریسک نمی‌شود.</p>
+      </div>
+
+      <div class="help-step" id="help-news">
+        <div class="help-title">📅 خبر مهم اقتصادی امروز</div>
+        <p class="help-desc">اگر امروز یک رویداد پرنوسان (مثل تصمیم نرخ بهره، NFP، یا گزارش تورم) در تقویم اقتصادی وجود دارد، این گزینه را تیک بزنید. زمان نزدیک به این اخبار معمولاً اسپرد بالا می‌رود و حرکت قیمت غیرقابل پیش‌بینی می‌شود؛ به همین دلیل آگیس در این حالت امتیاز را کم می‌کند و هشدار احتیاط نشان می‌دهد، حتی اگر بقیه فیلترها عالی باشند.</p>
+      </div>
+
+      <div class="help-step">
+        <div class="help-title">⚖️ فلسفه کلی آگیس</div>
+        <p class="help-desc">آگیس یک سیستم «ریسک‌اول» و «شکاک» است. هدف آن فیلتر کردن معاملات ضعیف و جلوگیری از ورودهای احساسی است، نه تولید سیگنال زیاد. امتیاز بالا به معنای تضمین سود نیست؛ فقط نشان می‌دهد که شرایط حداقلی سخت‌گیرانه برقرار است. همیشه مدیریت سرمایه را رعایت کنید.</p>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- ناوبری پایین -->
+<nav class="bottom-nav">
+  <button class="nav-item" data-tab="tab-settings">
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 00.3 1.9l.1.1a2 2 0 11-2.9 2.9l-.1-.1a1.7 1.7 0 00-1.9-.3 1.7 1.7 0 00-1 1.5V21a2 2 0 11-4 0v-.1a1.7 1.7 0 00-1-1.6 1.7 1.7 0 00-1.9.3l-.1.1a2 2 0 11-2.9-2.9l.1-.1a1.7 1.7 0 001.9.3H9a1.7 1.7 0 001-1.5V3a2 2 0 114 0v.1a1.7 1.7 0 001 1.5 1.7 1.7 0 001.9-.3l.1-.1a2 2 0 112.9 2.9l-.1.1a1.7 1.7 0 00-.3 1.9V9a1.7 1.7 0 001.5 1H21a2 2 0 110 4h-.1a1.7 1.7 0 00-1.5 1z"/></svg>
+    <span>تنظیمات</span>
+  </button>
+  <button class="nav-item" data-tab="tab-history">
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <span>سابقه</span>
+  </button>
+  <button class="nav-item active" data-tab="tab-home">
+    <svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 11.5L12 4l8 7.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 10v9h12v-9" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <span>خانه</span>
+  </button>
+  <button class="nav-item" data-tab="tab-chart">
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 3v18h18" stroke-linecap="round" stroke-linejoin="round"/><path d="M18 9l-5 5-4-4-5 5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <span>چارت و اخبار</span>
+  </button>
+  <button class="nav-item" data-tab="tab-help">
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.2a2.5 2.5 0 114 2c-.9.7-1.5 1.2-1.5 2.3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="17" r="0.9" fill="currentColor" stroke="none"/></svg>
+    <span>راهنما</span>
+  </button>
+</nav>
+
+<div class="toast" id="toast"></div>
+
+<script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+
+<script>
+let AEGIS_CONFIG = {
+  thresholdGo: parseFloat(localStorage.getItem("aegis_threshold")) || 7.5,
+  thresholdWait: parseFloat(localStorage.getItem("aegis_threshold_wait")) || 5.0,
+  accountSize: parseFloat(localStorage.getItem("aegis_account_size")) || 1000,
+  defaultRisk: parseFloat(localStorage.getItem("aegis_default_risk")) || 1,
+  dailyMaxLoss: parseFloat(localStorage.getItem("aegis_daily_max_loss")) || 3,
+  maxScore: 10
+};
+
+function applyRiskDefaults() {
+  const sizeEl = document.getElementById("accountSize");
+  const riskEl = document.getElementById("riskPercent");
+  if (sizeEl && !sizeEl.value) sizeEl.value = AEGIS_CONFIG.accountSize;
+  if (riskEl && !riskEl.value) riskEl.value = AEGIS_CONFIG.defaultRisk;
+}
+
+function checkDailyLossLimit() {
+  const history = JSON.parse(localStorage.getItem("aegis_history") || "[]");
+  const today = new Date().toLocaleDateString('fa-IR');
+  const todayLosses = history.filter(h => h.dayKey === today && h.outcome === "loss").length;
+  // هر باخت را تقریباً برابر ریسک پیش‌فرض حساب می‌کنیم
+  const estimatedLossPct = todayLosses * AEGIS_CONFIG.defaultRisk;
+  const banner = document.getElementById("revengeWarning");
+  if (!banner) return estimatedLossPct >= AEGIS_CONFIG.dailyMaxLoss;
+
+  if (estimatedLossPct >= AEGIS_CONFIG.dailyMaxLoss) {
+    banner.classList.remove("hidden");
+    banner.innerHTML = `🛑 امروز حدود <b>${estimatedLossPct.toFixed(1)}٪</b> ضرر ثبت شده (حد مجاز: ${AEGIS_CONFIG.dailyMaxLoss}٪). بهتر است معامله جدید باز نکنی.`;
+    return true;
+  }
+  return false;
+}
+
+const GAUGE_CIRCUMFERENCE = 2 * Math.PI * 60;
+let currentSymbol = "BTCUSDT";
+let currentInterval = "D";
+let isLightTheme = localStorage.getItem("aegis_theme") === "light";
+let lastAnalysisData = null;
+
+const themeBtn = document.getElementById("themeToggleBtn");
+const tvChart = document.getElementById("tradingview_chart");
+const newsContainer = document.getElementById("news_container");
+
+function showToast(msg, duration = 2800) {
+  const t = document.getElementById("toast");
+  t.textContent = msg;
+  t.classList.add("show");
+  setTimeout(() => t.classList.remove("show"), duration);
+}
+
+function switchTab(targetTabId) {
+  document.querySelectorAll(".nav-item").forEach(b => b.classList.remove("active"));
+  document.querySelectorAll(".tab-content").forEach(t => t.classList.remove("active"));
+  const targetNav = document.querySelector(`.nav-item[data-tab="${targetTabId}"]`);
+  if (targetNav) targetNav.classList.add("active");
+  const targetContent = document.getElementById(targetTabId);
+  if (targetContent) targetContent.classList.add("active");
+
+  if (targetTabId === "tab-chart") {
+    document.getElementById("chartSymbolLabel").textContent = "نماد فعلی: " + currentSymbol;
+    loadChart(currentSymbol, currentInterval);
+    fetchLiveNews(currentSymbol);
+  } else if (targetTabId === "tab-history") {
+    renderHistory();
+  } else if (targetTabId === "tab-settings") {
+    document.getElementById("cfgThreshold").value = AEGIS_CONFIG.thresholdGo;
+    document.getElementById("cfgWait").value = AEGIS_CONFIG.thresholdWait;
+    document.getElementById("cfgAccountSize").value = AEGIS_CONFIG.accountSize;
+    document.getElementById("cfgDefaultRisk").value = AEGIS_CONFIG.defaultRisk;
+    document.getElementById("cfgDailyMaxLoss").value = AEGIS_CONFIG.dailyMaxLoss;
+  }
+}
+
+document.querySelectorAll(".nav-item").forEach(btn => {
+  btn.addEventListener("click", function() {
+    const targetTabId = this.getAttribute("data-tab");
+    if (targetTabId) switchTab(targetTabId);
+  });
+});
+
+function goToHelp(sectionId) {
+  switchTab("tab-help");
+  setTimeout(() => {
+    const el = document.getElementById(sectionId);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+      const origBg = el.style.backgroundColor;
+      el.style.backgroundColor = "rgba(242, 181, 68, 0.15)";
+      setTimeout(() => { el.style.backgroundColor = origBg; }, 1600);
+    }
+  }, 120);
+}
+
+function applyTheme(isLight) {
+  if (isLight) {
+    document.documentElement.classList.add("light-theme");
+    document.body.classList.add("light-theme");
+    themeBtn.innerText = "☀️";
+  } else {
+    document.documentElement.classList.remove("light-theme");
+    document.body.classList.remove("light-theme");
+    themeBtn.innerText = "🌙";
+  }
+}
+applyTheme(isLightTheme);
+
+themeBtn.addEventListener("click", function() {
+  isLightTheme = !isLightTheme;
+  localStorage.setItem("aegis_theme", isLightTheme ? "light" : "dark");
+  applyTheme(isLightTheme);
+  if (document.getElementById("tab-chart").classList.contains("active")) {
+    loadChart(currentSymbol, currentInterval);
+  }
+});
+
+// به‌روزرسانی فوری نماد
+document.getElementById("symbol").addEventListener("input", function() {
+  const val = this.value.trim().toUpperCase();
+  if (val) {
+    currentSymbol = val;
+    document.getElementById("chartSymbolLabel").textContent = "نماد فعلی: " + currentSymbol;
+  }
+});
+
+// نمادهای مورد علاقه
+document.querySelectorAll(".fav-sym").forEach(btn => {
+  btn.addEventListener("click", function() {
+    const sym = this.getAttribute("data-sym");
+    document.getElementById("symbol").value = sym;
+    currentSymbol = sym;
+    document.getElementById("chartSymbolLabel").textContent = "نماد فعلی: " + currentSymbol;
+    showToast("نماد " + sym + " انتخاب شد");
+  });
+});
+
+function formatTradingViewSymbol(sym) {
+  let cleanSym = sym.toUpperCase().trim();
+  if (cleanSym.includes(":") || cleanSym.includes("/")) return cleanSym;
+  const knownCryptos = ["BTC", "ETH", "SOL", "XRP", "DOGE", "ADA", "BNB", "AVAX", "LINK", "DOT", "MATIC", "LTC", "NEAR", "APT", "ARB", "OP", "SUI", "PEPE", "WIF"];
+  if (knownCryptos.includes(cleanSym)) return `BINANCE:${cleanSym}USDT`;
+  if (cleanSym.endsWith("USDT") || cleanSym.endsWith("BUSD") || cleanSym.endsWith("USDC")) return `BINANCE:${cleanSym}`;
+  if (cleanSym === "GOLD" || cleanSym === "XAUUSD") return "TVC:GOLD";
+  if (cleanSym.length === 6 && (cleanSym.includes("USD") || cleanSym.includes("EUR") || cleanSym.includes("GBP") || cleanSym.includes("JPY"))) return `FX:${cleanSym}`;
+  return cleanSym;
+}
+
+function loadChart(symbol, interval) {
+  const formattedSymbol = formatTradingViewSymbol(symbol);
+  tvChart.innerHTML = "";
+  try {
+    new TradingView.widget({
+      "autosize": true,
+      "symbol": formattedSymbol,
+      "interval": interval,
+      "timezone": "Etc/UTC",
+      "theme": isLightTheme ? "light" : "dark",
+      "style": "1",
+      "locale": "fa",
+      "toolbar_bg": isLightTheme ? "#FFFFFF" : "#131418",
+      "enable_publishing": false,
+      "hide_top_toolbar": false,
+      "studies": ["STD;RSI", "STD;MACD", "STD;SMA"],
+      "container_id": "tradingview_chart"
+    });
+  } catch (e) {
+    tvChart.innerHTML = `<p style="text-align:center;color:var(--muted);padding:40px 20px;">خطا در بارگذاری چارت. اتصال اینترنت را بررسی کنید.</p>`;
+  }
+}
+
+async function fetchLiveNews(symbol) {
+  newsContainer.innerHTML = `<p style="text-align: center; color: var(--muted); font-size: 13px;">در حال بارگذاری اخبار زنده...</p>`;
+  let rssUrl = "https://cointelegraph.com/rss";
+  let cleanSym = symbol.toUpperCase().trim();
+  if (cleanSym.includes("EUR") || cleanSym.includes("USD") || cleanSym.includes("GBP") || cleanSym.includes("JPY") || cleanSym.includes("FX:")) {
+    rssUrl = "https://www.forexlive.com/feed/news";
+  } else if (cleanSym.includes("GOLD") || cleanSym.includes("XAU")) {
+    rssUrl = "https://www.forexlive.com/feed/news";
+  }
+  const proxyUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}`;
+  try {
+    const response = await fetch(proxyUrl);
+    const data = await response.json();
+    if (data.status === 'ok' && data.items && data.items.length > 0) {
+      newsContainer.innerHTML = "";
+      data.items.slice(0, 8).forEach(item => {
+        const pubDate = new Date(item.pubDate).toLocaleTimeString('fa-IR', {hour: '2-digit', minute:'2-digit'});
+        const newsCard = document.createElement("a");
+        newsCard.className = "news-item";
+        newsCard.href = item.link;
+        newsCard.target = "_blank";
+        newsCard.rel = "noopener";
+        newsCard.innerHTML = `
+          <div class="news-header">
+            <span class="news-source">مرجع تحلیل زنده</span>
+            <span class="news-date">${pubDate}</span>
+          </div>
+          <h4 class="news-title">${item.title}</h4>
+          <div class="news-footer"><span>مشاهده خبر کامل ↗</span></div>
+        `;
+        newsContainer.appendChild(newsCard);
+      });
+    } else {
+      newsContainer.innerHTML = `<p style="text-align: center; color: var(--muted); font-size: 13px;">خبری یافت نشد.</p>`;
+    }
+  } catch (e) {
+    newsContainer.innerHTML = `<p style="text-align: center; color: var(--red); font-size: 13px;">خطا در دریافت اخبار. اتصال را بررسی کنید.</p>`;
+  }
+}
+
+document.querySelectorAll(".tf-btn").forEach(btn => {
+  btn.addEventListener("click", function() {
+    document.querySelectorAll(".tf-btn").forEach(b => b.classList.remove("active"));
+    this.classList.add("active");
+    currentInterval = this.getAttribute("data-tf");
+    loadChart(currentSymbol, currentInterval);
+  });
+});
+
+// --- دریافت قیمت لحظه‌ای از بایننس ---
+document.getElementById("fetchPriceBtn").addEventListener("click", async function() {
+  const symInput = document.getElementById("symbol").value.trim().toUpperCase();
+  if (!symInput) {
+    showToast("ابتدا نماد را وارد کنید");
+    return;
+  }
+  let pair = symInput;
+  if (!pair.endsWith("USDT") && !pair.endsWith("BUSD") && !pair.endsWith("USDC")) {
+    // سعی کن USDT اضافه کند
+    const base = pair.replace("USDT", "").replace("BUSD", "");
+    pair = base + "USDT";
+  }
+  this.disabled = true;
+  this.textContent = "...";
+  try {
+    const res = await fetch(`https://api.binance.com/api/v3/ticker/price?symbol=${pair}`);
+    if (!res.ok) throw new Error("نماد پشتیبانی نمی‌شود");
+    const data = await res.json();
+    const price = parseFloat(data.price);
+    document.getElementById("price").value = price;
+    showToast(`قیمت ${pair}: ${price}`);
+    currentSymbol = pair;
+  } catch (err) {
+    showToast("قیمت لحظه‌ای فقط برای جفت‌ارزهای بایننس در دسترس است");
+  } finally {
+    this.disabled = false;
+    this.textContent = "قیمت لحظه‌ای";
+  }
+});
+
+// --- الگوریتم هوشمند سخت‌گیر ---
+function aegisScore(data) {
+  let total = 0;
+  const reasons = [];
+
+  // ۱. روند (SMA 50) - نسبت به جهت معامله
+  const isLong = (data.direction || "long") === "long";
+  if (isLong) {
+    if (data.aboveSma50) {
+      total += 2.0;
+      reasons.push({ text: "روند هم‌راستا با خرید: قیمت بالای SMA 50.", type: "ok" });
+    } else {
+      total -= 2.5;
+      reasons.push({ text: "خلاف روند خرید: قیمت زیر SMA 50 (جریمه سنگین).", type: "bad" });
+    }
+  } else {
+    if (!data.aboveSma50) {
+      total += 2.0;
+      reasons.push({ text: "روند هم‌راستا با فروش: قیمت زیر SMA 50.", type: "ok" });
+    } else {
+      total -= 2.5;
+      reasons.push({ text: "خلاف روند فروش: قیمت بالای SMA 50 (جریمه سنگین).", type: "bad" });
+    }
+  }
+
+  // ۲. Breakout
+  if (data.breakout) {
+    total += 2.0;
+    reasons.push({ text: isLong ? "تاییدیه قوی: شکست مقاومت معتبر رخ داده است." : "تاییدیه قوی: شکست حمایت معتبر رخ داده است.", type: "ok" });
+  } else {
+    reasons.push({ text: isLong ? "شکست مقاومت (Breakout) تایید نشده است." : "شکست حمایت (Breakdown) تایید نشده است.", type: "warn" });
+  }
+
+  // ۳. RSI سخت‌گیرانه
+  if (!isNaN(data.rsi) && data.rsi >= 0 && data.rsi <= 100) {
+    if (data.rsi >= 48 && data.rsi <= 62) {
+      total += 2.0;
+      reasons.push({ text: `RSI در محدوده مومنتوم امن (${data.rsi}).`, type: "ok" });
+    } else if (data.rsi > 70) {
+      total -= 1.0;
+      reasons.push({ text: `RSI در محدوده اشباع خرید خطرناک (${data.rsi}).`, type: "bad" });
+    } else if (data.rsi < 30) {
+      total += 0.5;
+      reasons.push({ text: `RSI در محدوده اشباع فروش (${data.rsi}) — احتیاط در ورود زودهنگام.`, type: "warn" });
+    } else {
+      total += 0.5;
+      reasons.push({ text: `RSI در وضعیت خنثی یا متمایل به ضعف (${data.rsi}).`, type: "warn" });
+    }
+  } else {
+    total -= 0.5;
+    reasons.push({ text: "RSI وارد نشده — اطلاعات ناقص (جریمه کوچک).", type: "warn" });
+  }
+
+  // ۴. مکدی و حجم
+  if (data.macdBullish) {
+    total += 1.5;
+    reasons.push({ text: isLong ? "کراس صعودی مکدی تایید شد." : "کراس نزولی مکدی تایید شد.", type: "ok" });
+  } else {
+    reasons.push({ text: isLong ? "کراس صعودی مکدی مشاهده نشد." : "کراس نزولی مکدی مشاهده نشد.", type: "warn" });
+  }
+
+  if (data.volume) {
+    total += 1.5;
+    reasons.push({ text: isLong ? "حجم معاملات با ساختار صعودی هم‌راستاست." : "حجم معاملات با ساختار نزولی هم‌راستاست.", type: "ok" });
+  } else {
+    reasons.push({ text: "حجم معاملات حمایتی ثبت نشده است.", type: "warn" });
+  }
+
+  // ۵. فاندامنتال
+  if (data.fundamental) {
+    total += 1.0;
+    reasons.push({ text: "کاتالیزور فاندامنتال مثبت پشتیبان معامله است.", type: "ok" });
+  } else {
+    reasons.push({ text: "کاتالیزور فاندامنتال قوی گزارش نشده است.", type: "warn" });
+  }
+
+  // ۶. خبر مهم اقتصادی امروز - نوسان غیرقابل پیش‌بینی، مستقل جریمه می‌شود
+  if (data.newsToday) {
+    total -= 1.0;
+    reasons.push({ text: "⚠️ امروز خبر مهم اقتصادی دارید - نوسان و اسپرد غیرقابل پیش‌بینی، ریسک اضافه.", type: "bad" });
+  }
+
+  let finalScore = Math.max(0, Math.min(10, Math.round(total * 10) / 10));
+  return { score: finalScore, reasons };
+}
+
+function aegisDecision(result) {
+  if (result.score >= AEGIS_CONFIG.thresholdGo) {
+    return { 
+      status: "ست‌آپ قوی — مناسب ورود با حجم کنترل‌شده", 
+      class: "buy", 
+      desc: "فیلترهای اصلی همگرا هستند. می‌توانید با ریسک حداکثر ۱٪ وارد شوید و مدیریت پوزیشن را جدی بگیرید." 
+    };
+  }
+  if (result.score >= AEGIS_CONFIG.thresholdWait) {
+    return { 
+      status: "ست‌آپ متوسط — صبر کنید یا حجم را خیلی کم کنید", 
+      class: "wait", 
+      desc: "تاییدیه‌ها ناقص است. ورود فقط در صورت تجربه بالا و با حجم بسیار کم توصیه می‌شود. ریسک تله وجود دارد." 
+    };
+  }
+  return { 
+    status: "ست‌آپ ضعیف — ورود توصیه نمی‌شود", 
+    class: "reject", 
+    desc: "شاخص‌های کلیدی تایید نشده‌اند. احتمال ضرر بالا است. صبر کنید تا شرایط بهتر شود." 
+  };
+}
+
+function clearErrors() {
+  ["priceError", "slError", "rsiError"].forEach(id => {
+    const el = document.getElementById(id);
+    el.textContent = "";
+    el.classList.remove("show");
+  });
+}
+
+function showError(id, msg) {
+  const el = document.getElementById(id);
+  el.textContent = msg;
+  el.classList.add("show");
+}
+
+function renderResult(result, decision, data) {
+  document.getElementById("result").classList.remove("hidden");
+  document.getElementById("score").textContent = result.score;
+
+  const statusEl = document.getElementById("status");
+  statusEl.textContent = decision.status;
+  statusEl.className = "status " + decision.class;
+  document.getElementById("statusDesc").textContent = decision.desc;
+
+  const offset = GAUGE_CIRCUMFERENCE * (1 - result.score / AEGIS_CONFIG.maxScore);
+  document.getElementById("gaugeFill").style.strokeDashoffset = offset;
+
+  // محاسبات ساختاری ریسک و ریوارد برای خرید و فروش
+  const isLong = (data.direction || "long") === "long";
+  const validSL = data.price > 0 && data.stopLoss > 0 && (
+    (isLong && data.stopLoss < data.price) || (!isLong && data.stopLoss > data.price)
+  );
+
+  if (validSL) {
+    const riskDistance = Math.abs(data.price - data.stopLoss);
+    const tp1 = isLong ? data.price + (riskDistance * 2) : data.price - (riskDistance * 2);
+    const tp2 = isLong ? data.price + (riskDistance * 3) : data.price - (riskDistance * 3);
+    const riskPct = (riskDistance / data.price * 100).toFixed(2);
+
+    let pipSize = 0.0001;
+    const sym = (data.symbol || "").toUpperCase();
+    if (sym.includes("JPY")) pipSize = 0.01;
+    else if (sym.includes("XAU") || sym.includes("GOLD")) pipSize = 0.1;
+    else if (data.price > 50) pipSize = 0.01;
+    const pips = Math.round(riskDistance / pipSize);
+
+    document.getElementById("slVal").textContent = formatNumber(data.stopLoss);
+    document.getElementById("tp1Val").textContent = formatNumber(tp1);
+    document.getElementById("tp2Val").textContent = formatNumber(tp2);
+    document.getElementById("rrVal").textContent = "۱ : ۲ / ۱ : ۳";
+    document.getElementById("rationaleText").textContent =
+      `${isLong ? "خرید" : "فروش"} · حد ضرر ${formatNumber(data.stopLoss)} · فاصله ${formatNumber(riskDistance)} (${pips} پیپ ≈ ${riskPct}٪). اهداف ۱:۲ و ۱:۳.`;
+
+    // ریسک استفاده‌شده برای ژورنال
+    const riskPctInput = parseFloat(document.getElementById("riskPercent").value);
+    const riskUsed = (!isNaN(riskPctInput) && riskPctInput > 0) ? riskPctInput : AEGIS_CONFIG.defaultRisk;
+
+    lastAnalysisData = { ...data, riskDistance, tp1, tp2, pips, pipSize, riskUsed, score: result.score, status: decision.status, reasons: result.reasons };
+    updatePosSize();
+  } else {
+    document.getElementById("slVal").textContent = "---";
+    document.getElementById("tp1Val").textContent = "---";
+    document.getElementById("tp2Val").textContent = "---";
+    document.getElementById("rrVal").textContent = "--";
+    document.getElementById("rationaleText").textContent = isLong
+      ? "برای خرید، حد ضرر باید پایین‌تر از قیمت ورود باشد."
+      : "برای فروش، حد ضرر باید بالاتر از قیمت ورود باشد.";
+    lastAnalysisData = null;
+    document.getElementById("posSizeResult").textContent = "ابتدا تحلیل معتبر با SL ساختاری انجام دهید";
+  }
+
+  const list = document.getElementById("reasons");
+  list.innerHTML = "";
+  result.reasons.forEach(r => {
+    const li = document.createElement("li");
+    li.innerHTML = `<span>${r.text}</span><span class="reason-icon ${r.type}">${r.type==='ok'?'✓':r.type==='warn'?'!':'✕'}</span>`;
+    list.appendChild(li);
+  });
+
+  // دیگر خودکار ذخیره نمی‌شود — فقط با دکمه ثبت ژورنال
+  const resultSection = document.getElementById("result");
+  if (typeof resultSection.scrollIntoView === "function") {
+    resultSection.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+}
+
+function formatNumber(num) {
+  if (num >= 1000) return num.toLocaleString('en-US', { maximumFractionDigits: 2 });
+  if (num >= 1) return num.toFixed(4).replace(/\.?0+$/, '');
+  return num.toFixed(6).replace(/\.?0+$/, '');
+}
+
+// محاسبه‌ی واقعی ارزش هر پیپ در هر لات - وابسته به نوع دارایی، نه یه عدد ثابت
+function calcPipValuePerLot(symbol, price, pipSize) {
+  const sym = (symbol || "").toUpperCase().replace(/[^A-Z]/g, "");
+  const isGold = sym.includes("XAU") || sym.includes("GOLD");
+  const contractSize = isGold ? 100 : 100000; // طلا: ۱۰۰ اونس در هر لات، فارکس: ۱۰۰,۰۰۰ واحد
+
+  if (isGold || sym.endsWith("USD")) {
+    // ارز مظنه دلاره (یا طلا که خودش بر حسب دلار قیمت‌گذاری میشه) - بدون نیاز به تبدیل
+    return { value: contractSize * pipSize, exact: true, isUsdBase: false, contractSize };
+  }
+  if (sym.startsWith("USD")) {
+    // دلار ارز پایه‌ست (USDJPY، USDCAD، USDCHF) - سود/زیان بر حسب ارز مظنه‌ست، باید تبدیل بشه
+    return { value: (contractSize * pipSize) / price, exact: true, isUsdBase: true, contractSize };
+  }
+  // کراس بدون دلار مستقیم (مثل GBPJPY، EURGBP) - بدون نرخ تبدیل دوم دقیق قابل محاسبه نیست
+  return { value: 10, exact: false, isUsdBase: false, contractSize };
+}
+
+function isForexOrGoldSymbol(symbol) {
+  const sym = (symbol || "").toUpperCase().replace(/[^A-Z]/g, "");
+  if (sym.includes("XAU") || sym.includes("GOLD")) return true;
+  return /^[A-Z]{6}$/.test(sym);
+}
+
+// ماشین‌حساب حجم پوزیشن پیشرفته + هشدار ریسک
+function updatePosSize() {
+  const warnEl = document.getElementById("riskWarning");
+  warnEl.style.display = "none";
+  warnEl.textContent = "";
+  warnEl.style.background = "rgba(239,68,68,0.12)";
+  warnEl.style.color = "var(--red)";
+
+  if (!lastAnalysisData || !lastAnalysisData.riskDistance) {
+    document.getElementById("posSizeResult").textContent = "ابتدا تحلیل معتبر با حد ضرر ساختاری انجام دهید";
+    return;
+  }
+  const riskDollar = parseFloat(document.getElementById("accountRisk").value);
+  const riskPct = parseFloat(document.getElementById("riskPercent").value);
+  const accountSize = parseFloat(document.getElementById("accountSize").value);
+  const riskDist = lastAnalysisData.riskDistance;
+  const pips = lastAnalysisData.pips || 0;
+  const symbol = lastAnalysisData.symbol || "";
+  const price = lastAnalysisData.price;
+  const pipSize = lastAnalysisData.pipSize || 0.0001;
+
+  let riskAmount = 0;
+  let usedPct = null;
+
+  // اولویت: درصد ریسک (واضح‌تر برای آماتور) مگر فقط دلاری پر باشد
+  if (!isNaN(riskPct) && riskPct > 0 && !isNaN(accountSize) && accountSize > 0) {
+    riskAmount = accountSize * (riskPct / 100);
+    usedPct = riskPct;
+  } else if (!isNaN(riskDollar) && riskDollar > 0) {
+    riskAmount = riskDollar;
+    if (!isNaN(accountSize) && accountSize > 0) usedPct = (riskAmount / accountSize) * 100;
+  } else {
+    document.getElementById("posSizeResult").textContent = "موجودی حساب + درصد ریسک (یا ریسک دلاری) را وارد کنید";
+    return;
+  }
+
+  const isFxGold = isForexOrGoldSymbol(symbol);
+  let resultHtml = `ریسک: <b dir="ltr">${formatNumber(riskAmount)}</b> دلار` + (usedPct != null ? ` (${usedPct.toFixed(2)}٪)` : "");
+  let notional;
+
+  if (isFxGold && pips > 0) {
+    const pv = calcPipValuePerLot(symbol, price, pipSize);
+    const standardLots = riskAmount / (pips * pv.value);
+    const microLots = standardLots * 100;
+
+    resultHtml += ` · <b>${pips}</b> پیپ`;
+    resultHtml += `<br>فارکس: <b dir="ltr">${standardLots.toFixed(3)}</b> لات استاندارد ≈ <b dir="ltr">${microLots.toFixed(0)}</b> میکرو لات`;
+
+    if (pv.exact) {
+      // نوسیونال فقط وقتی قابل‌اعتماده که دلار مستقیم تو جفت‌ارز باشه
+      notional = pv.isUsdBase ? (standardLots * pv.contractSize) : (standardLots * pv.contractSize * price);
+      resultHtml += `<br>ارزش تقریبی پوزیشن: <b dir="ltr">${formatNumber(notional)}</b> دلار`;
+    } else {
+      resultHtml += `<br><span style="color:var(--gold);font-size:11px;">⚠️ این جفت‌ارز کراس بدون دلار مستقیمه؛ ارزش پیپ و نوسیونال دلاری بدون نرخ تبدیل دوم (از بروکر خودت) قابل محاسبه دقیق نیست. فقط لات رو به‌عنوان تقریب اولیه در نظر بگیر.</span>`;
+    }
+  } else {
+    const positionSize = riskAmount / riskDist;
+    notional = positionSize * price;
+    resultHtml += `<br>تعداد واحد/سهم: <b dir="ltr">${formatNumber(positionSize)}</b>`;
+    resultHtml += `<br>ارزش تقریبی پوزیشن: <b dir="ltr">${formatNumber(notional)}</b> دلار`;
+  }
+
+  document.getElementById("posSizeResult").innerHTML = resultHtml;
+
+  if (usedPct != null) {
+    if (usedPct > 2) {
+      warnEl.style.display = "block";
+      warnEl.textContent = "⚠️ ریسک بالاتر از ۲٪ — برای سرمایه کوچک بسیار خطرناک است";
+    } else if (usedPct > 1) {
+      warnEl.style.display = "block";
+      warnEl.style.background = "rgba(242,181,68,0.12)";
+      warnEl.style.color = "var(--gold)";
+      warnEl.textContent = "ریسک ۱ تا ۲٪ است. فقط ست‌آپ‌های قوی را با این حجم بگیرید.";
+    }
+  }
+}
+
+["accountRisk", "riskPercent", "accountSize"].forEach(id => {
+  document.getElementById(id).addEventListener("input", updatePosSize);
+});
+
+// دکمه‌های پیش‌فرض ریسک
+document.querySelectorAll(".risk-preset").forEach(btn => {
+  btn.addEventListener("click", function() {
+    const pct = this.getAttribute("data-pct");
+    document.getElementById("riskPercent").value = pct;
+    // اگر موجودی خالی است، ۱۰۰۰ را پیشنهاد بده
+    if (!document.getElementById("accountSize").value) {
+      document.getElementById("accountSize").value = "1000";
+    }
+    document.getElementById("accountRisk").value = "";
+    updatePosSize();
+  });
+});
+
+// تشخیص سشن بازار (UTC)
+function updateMarketSession() {
+  const badge = document.getElementById("sessionBadge");
+  const spreadEl = document.getElementById("spreadWarning");
+  if (!badge) return;
+  const h = new Date().getUTCHours();
+  let text = "";
+  let color = "var(--muted)";
+  let spreadMsg = "";
+
+  if (h >= 0 && h < 7) {
+    text = "سشن آسیا (توکیو)";
+    color = "#8b8f98";
+    spreadMsg = "اسپرد ممکن است بالاتر باشد";
+  } else if (h >= 7 && h < 12) {
+    text = "سشن لندن 🔥";
+    color = "var(--gold)";
+  } else if (h >= 12 && h < 16) {
+    text = "همپوشانی لندن + نیویورک ⚡ (بهترین زمان)";
+    color = "var(--green)";
+  } else if (h >= 16 && h < 21) {
+    text = "سشن نیویورک";
+    color = "var(--gold)";
+  } else {
+    text = "بازار کم‌نوسان / پایان روز";
+    color = "#8b8f98";
+    spreadMsg = "نوسان کم + اسپرد بالاتر — احتیاط کنید";
+  }
+  badge.textContent = text;
+  badge.style.color = color;
+
+  if (spreadEl) {
+    if (spreadMsg) {
+      spreadEl.style.display = "inline-block";
+      spreadEl.textContent = spreadMsg;
+    } else {
+      spreadEl.style.display = "none";
+    }
+  }
+}
+updateMarketSession();
+setInterval(updateMarketSession, 60000);
+
+function todayKey() {
+  const d = new Date();
+  return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+}
+
+function saveToHistory(data, score, status, reasons, riskUsed) {
+  let history = normalizeHistory(JSON.parse(localStorage.getItem("aegis_history") || "[]"));
+  const okCount = (reasons || []).filter(r => r.type === "ok").length;
+  const now = new Date();
+  history.unshift({
+    id: now.getTime() + "_" + Math.random().toString(36).slice(2, 7),
+    symbol: data.symbol,
+    direction: data.direction || "long",
+    score: score,
+    status: status,
+    price: data.price || null,
+    stopLoss: data.stopLoss || null,
+    rsi: isNaN(data.rsi) ? null : data.rsi,
+    okFilters: okCount,
+    riskUsed: riskUsed || AEGIS_CONFIG.defaultRisk,
+    outcome: null,
+    dayKey: todayKey(),
+    date: now.toLocaleDateString('fa-IR') + ' ' + now.toLocaleTimeString('fa-IR', {hour: '2-digit', minute:'2-digit'}),
+    timestamp: now.getTime()
+  });
+  if (history.length > 50) history = history.slice(0, 50);
+  localStorage.setItem("aegis_history", JSON.stringify(history));
+  checkRevengeGuard();
+}
+
+function normalizeHistory(history) {
+  let changed = false;
+  history.forEach((h, i) => {
+    if (!h.id) {
+      h.id = (h.timestamp || Date.now()) + "_fix" + i;
+      changed = true;
+    }
+  });
+  if (changed) localStorage.setItem("aegis_history", JSON.stringify(history));
+  return history;
+}
+
+function setOutcome(id, outcome) {
+  if (!id || id === "undefined" || id === "null") {
+    showToast("این رکورد شناسه ندارد — دوباره در ژورنال ثبت کن");
+    return;
+  }
+  let history = normalizeHistory(JSON.parse(localStorage.getItem("aegis_history") || "[]"));
+  const item = history.find(h => String(h.id) === String(id));
+  if (!item) {
+    showToast("رکورد پیدا نشد — تب سابقه را دوباره باز کن");
+    return;
+  }
+  item.outcome = (item.outcome === outcome) ? null : outcome;
+  localStorage.setItem("aegis_history", JSON.stringify(history));
+  renderHistory();
+  checkRevengeGuard();
+  const labels = { win: "برد", loss: "باخت", breakeven: "سربه‌سر" };
+  if (item.outcome) showToast("نتیجه ثبت شد: " + labels[item.outcome]);
+  else showToast("نتیجه پاک شد");
+}
+
+function renderHistory() {
+  const container = document.getElementById("historyContainer");
+  const exportBtn = document.getElementById("exportHistoryBtn");
+  let history = normalizeHistory(JSON.parse(localStorage.getItem("aegis_history") || "[]"));
+  if (history.length === 0) {
+    container.innerHTML = `<p style="text-align: center; color: var(--muted); font-size: 13px;">هنوز موردی در ژورنال نیست.<br>بعد از تحلیل، دکمه «ثبت در ژورنال» را بزن.</p>`;
+    exportBtn.style.display = "none";
+    document.getElementById("statsCard").style.display = "none";
+    return;
+  }
+  exportBtn.style.display = "block";
+  const outcomeLabel = { win: "برد ✅", loss: "باخت ❌", breakeven: "سربه‌سر ➖" };
+  container.innerHTML = history.map((item) => `
+    <div class="history-item" data-id="${item.id}">
+      <div class="history-top">
+        <div>
+          <div class="history-sym">${item.symbol}</div>
+          <div class="history-date">${item.date} — ${item.status || ""}</div>
+        </div>
+        <div class="history-score">${item.score} <span style="font-size:12px; color:var(--muted)">/۱۰</span></div>
+      </div>
+      <div class="history-details">
+        ${item.price ? `ورود: ${formatNumber(item.price)}` : ''}
+        ${item.stopLoss ? ` · SL: ${formatNumber(item.stopLoss)}` : ''}
+        ${item.rsi != null ? ` · RSI: ${item.rsi}` : ''}
+        ${item.riskUsed != null ? ` · ریسک: ${item.riskUsed}٪` : ''}
+      </div>
+      <div class="outcome-row" data-id="${item.id}">
+        <span class="outcome-label">${item.outcome ? "نتیجه: " + outcomeLabel[item.outcome] : "نتیجه معامله را بزن:"}</span>
+        <div class="outcome-btns">
+          <button type="button" class="outcome-btn win ${item.outcome === 'win' ? 'active' : ''}" data-outcome="win">برد</button>
+          <button type="button" class="outcome-btn loss ${item.outcome === 'loss' ? 'active' : ''}" data-outcome="loss">باخت</button>
+          <button type="button" class="outcome-btn be ${item.outcome === 'breakeven' ? 'active' : ''}" data-outcome="breakeven">سربه‌سر</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+
+  container.querySelectorAll(".history-item").forEach(el => {
+    const top = el.querySelector(".history-top");
+    if (top) top.addEventListener("click", function() { el.classList.toggle("expanded"); });
+  });
+
+  container.querySelectorAll(".outcome-btn").forEach(btn => {
+    btn.addEventListener("click", function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      const row = this.closest(".outcome-row");
+      const id = row ? row.getAttribute("data-id") : null;
+      setOutcome(id, this.getAttribute("data-outcome"));
+    });
+  });
+
+  renderStats(history);
+}
+
+function renderStats(history) {
+  const statsCard = document.getElementById("statsCard");
+  const statsContent = document.getElementById("statsContent");
+  const withOutcome = history.filter(h => h.outcome === "win" || h.outcome === "loss");
+
+  if (withOutcome.length === 0) {
+    statsCard.style.display = "block";
+    statsContent.innerHTML = `<p style="color:var(--muted);">هنوز هیچ نتیجه‌ای ثبت نشده. بعد از بسته شدن معامله‌هات، پایین هر ردیف تو تاریخچه، نتیجه رو بزن تا آمار واقعی اینجا ظاهر بشه.</p>`;
+    return;
+  }
+  statsCard.style.display = "block";
+
+  const winRate = (arr) => arr.length ? Math.round((arr.filter(h => h.outcome === "win").length / arr.length) * 100) : null;
+
+  const overallRate = winRate(withOutcome);
+  const highScore = withOutcome.filter(h => h.score >= AEGIS_CONFIG.thresholdGo);
+  const lowScore = withOutcome.filter(h => h.score < AEGIS_CONFIG.thresholdGo);
+  const highRate = winRate(highScore);
+  const lowRate = winRate(lowScore);
+
+  let html = `<div>📊 نرخ برد کلی: <b style="color:var(--gold);">${overallRate}٪</b> (از ${withOutcome.length} معامله ثبت‌شده)</div>`;
+  html += `<div>🟢 نرخ برد وقتی امتیاز ≥ ${AEGIS_CONFIG.thresholdGo}: <b style="color:${highRate == null ? 'var(--muted)' : 'var(--green)'};">${highRate != null ? highRate + '٪' : 'داده کافی نیست'}</b> ${highScore.length ? `(${highScore.length} مورد)` : ''}</div>`;
+  html += `<div>🔴 نرخ برد وقتی امتیاز کمتر بود: <b style="color:${lowRate == null ? 'var(--muted)' : 'var(--red)'};">${lowRate != null ? lowRate + '٪' : 'داده کافی نیست'}</b> ${lowScore.length ? `(${lowScore.length} مورد)` : ''}</div>`;
+
+  if (withOutcome.length < 10) {
+    html += `<div style="color:var(--muted);font-size:11.5px;margin-top:6px;">⚠️ نمونه کوچیکه (کمتر از ۱۰ معامله) — این آمار هنوز قابل‌اتکا نیست، فقط روند اولیه رو نشون میده.</div>`;
+  }
+  statsContent.innerHTML = html;
+}
+
+// --- محافظ روانی: هشدار معامله انتقام‌جویانه بعد از باخت‌های پیاپی امروز ---
+function checkRevengeGuard() {
+  const banner = document.getElementById("revengeWarning");
+  if (!banner) return;
+  const history = JSON.parse(localStorage.getItem("aegis_history") || "[]");
+  const today = todayKey();
+  const todayItems = history.filter(h => h.dayKey === today);
+  const todayLosses = todayItems.filter(h => h.outcome === "loss");
+  const lastTwo = todayItems.slice(0, 2);
+  const bothLoss = lastTwo.length === 2 && lastTwo.every(h => h.outcome === "loss");
+  // جمع ریسک واقعی ثبت‌شده در باخت‌ها (نه فقط تعداد × پیش‌فرض)
+  const estimatedLossPct = todayLosses.reduce((sum, h) => sum + (parseFloat(h.riskUsed) || AEGIS_CONFIG.defaultRisk), 0);
+
+  if (estimatedLossPct >= AEGIS_CONFIG.dailyMaxLoss) {
+    banner.classList.remove("hidden");
+    banner.innerHTML = `🛑 امروز حدود <b>${estimatedLossPct.toFixed(1)}٪</b> ضرر ثبت شده (حد مجاز روزانه: ${AEGIS_CONFIG.dailyMaxLoss}٪). بهتر است فعلاً معامله جدید باز نکنی.`;
+  } else if (bothLoss) {
+    banner.classList.remove("hidden");
+    banner.innerHTML = "🛑 امروز دو معامله پیاپی باخته‌ای. ممکن است دنبال جبران هیجانی باشی — کمی صبر کن.";
+  } else {
+    banner.classList.add("hidden");
+  }
+}
+
+document.getElementById("exportHistoryBtn").addEventListener("click", function() {
+  const history = localStorage.getItem("aegis_history") || "[]";
+  const blob = new Blob([history], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `aegis-history-${new Date().toISOString().slice(0,10)}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast("فایل تاریخچه دانلود شد");
+});
+
+document.getElementById("advToggle").addEventListener("click", function () {
+  this.classList.toggle("open");
+  document.getElementById("advFields").classList.toggle("open");
+});
+
+document.getElementById("clearFormBtn").addEventListener("click", function() {
+  document.getElementById("symbol").value = "";
+  document.getElementById("price").value = "";
+  document.getElementById("stopLossPrice").value = "";
+  document.getElementById("rsi").value = "";
+  document.getElementById("aboveSma50").checked = true;
+  document.getElementById("breakout").checked = false;
+  document.getElementById("macdBullish").checked = false;
+  document.getElementById("volume").checked = false;
+  document.getElementById("fundamental").checked = false;
+  document.getElementById("newsToday").checked = false;
+  document.getElementById("tradeDirection").value = "long";
+  document.getElementById("dirLong").classList.add("active");
+  document.getElementById("dirShort").classList.remove("active");
+  updateDirectionLabels("long");
+  document.getElementById("result").classList.add("hidden");
+  clearErrors();
+  lastAnalysisData = null;
+  showToast("فرم پاک شد");
+});
+
+// جهت معامله
+function updateDirectionLabels(dir) {
+  const isLong = dir === "long";
+  document.getElementById("breakoutLabel").textContent = isLong
+    ? "شکست معتبر مقاومت مهم (Breakout)"
+    : "شکست معتبر حمایت مهم (Breakdown)";
+  document.getElementById("macdLabel").textContent = isLong
+    ? "کراس مکدی صعودی در ناحیه امن"
+    : "کراس مکدی نزولی در ناحیه امن";
+  document.getElementById("volumeLabel").textContent = isLong
+    ? "حجم معاملات بالا و تاییدکننده کندل صعودی"
+    : "حجم معاملات بالا و تاییدکننده کندل نزولی";
+}
+
+document.querySelectorAll(".dir-btn").forEach(btn => {
+  btn.addEventListener("click", function() {
+    document.querySelectorAll(".dir-btn").forEach(b => b.classList.remove("active"));
+    this.classList.add("active");
+    const dir = this.getAttribute("data-dir");
+    document.getElementById("tradeDirection").value = dir;
+    updateDirectionLabels(dir);
+  });
+});
+
+// ثبت دستی در ژورنال (نه هر تحلیل)
+document.getElementById("saveJournalBtn").addEventListener("click", function() {
+  if (!lastAnalysisData || lastAnalysisData.score == null) {
+    showToast("اول یک تحلیل معتبر انجام بده");
+    return;
+  }
+  saveToHistory(
+    lastAnalysisData,
+    lastAnalysisData.score,
+    lastAnalysisData.status,
+    lastAnalysisData.reasons || [],
+    lastAnalysisData.riskUsed
+  );
+  showToast("در ژورنال ثبت شد — بعد از بسته شدن معامله نتیجه را در سابقه بزن");
+});
+
+document.getElementById("analyzeBtn").addEventListener("click", function () {
+  clearErrors();
+  const symbol = document.getElementById("symbol").value.trim();
+  const priceVal = parseFloat(document.getElementById("price").value);
+  const stopLossVal = parseFloat(document.getElementById("stopLossPrice").value);
+  const rsiVal = parseFloat(document.getElementById("rsi").value);
+
+  let hasError = false;
+
+  if (!symbol) {
+    showToast("لطفاً نماد معاملاتی را وارد کنید");
+    return;
+  }
+
+  if (isNaN(priceVal) || priceVal <= 0) {
+    showError("priceError", "قیمت ورود باید عدد مثبت باشد");
+    hasError = true;
+  }
+
+  const direction = document.getElementById("tradeDirection").value || "long";
+
+  if (isNaN(stopLossVal) || stopLossVal <= 0) {
+    showError("slError", "حد ضرر ساختاری باید عدد مثبت باشد");
+    hasError = true;
+  } else if (!isNaN(priceVal)) {
+    if (direction === "long" && stopLossVal >= priceVal) {
+      showError("slError", "برای خرید، حد ضرر باید پایین‌تر از ورود باشد");
+      hasError = true;
+    }
+    if (direction === "short" && stopLossVal <= priceVal) {
+      showError("slError", "برای فروش، حد ضرر باید بالاتر از ورود باشد");
+      hasError = true;
+    }
+  }
+
+  if (!isNaN(rsiVal) && (rsiVal < 0 || rsiVal > 100)) {
+    showError("rsiError", "RSI باید بین ۰ تا ۱۰۰ باشد");
+    hasError = true;
+  }
+
+  if (hasError) {
+    showToast("لطفاً خطاهای ورودی را برطرف کنید");
+    return;
+  }
+
+  currentSymbol = symbol.toUpperCase();
+  document.getElementById("chartSymbolLabel").textContent = "نماد فعلی: " + currentSymbol;
+
+  const data = {
+    symbol: currentSymbol,
+    direction: direction,
+    price: isNaN(priceVal) ? 0 : priceVal,
+    stopLoss: isNaN(stopLossVal) ? 0 : stopLossVal,
+    rsi: rsiVal,
+    aboveSma50: document.getElementById("aboveSma50").checked,
+    breakout: document.getElementById("breakout").checked,
+    macdBullish: document.getElementById("macdBullish").checked,
+    volume: document.getElementById("volume").checked,
+    fundamental: document.getElementById("fundamental").checked,
+    newsToday: document.getElementById("newsToday").checked
+  };
+
+  const result = aegisScore(data);
+  const decision = aegisDecision(result);
+  renderResult(result, decision, data);
+});
+
+document.getElementById("saveSettingsBtn").addEventListener("click", function() {
+  const goVal = parseFloat(document.getElementById("cfgThreshold").value);
+  const waitVal = parseFloat(document.getElementById("cfgWait").value);
+  const accVal = parseFloat(document.getElementById("cfgAccountSize").value);
+  const riskVal = parseFloat(document.getElementById("cfgDefaultRisk").value);
+  const dailyVal = parseFloat(document.getElementById("cfgDailyMaxLoss").value);
+
+  if (!(goVal >= 1 && goVal <= 10 && waitVal >= 1 && waitVal < goVal)) {
+    showToast("آستانه ورود باید بزرگ‌تر از آستانه صبر باشد");
+    return;
+  }
+  if (isNaN(accVal) || accVal <= 0 || isNaN(riskVal) || riskVal <= 0 || isNaN(dailyVal) || dailyVal <= 0) {
+    showToast("موجودی، ریسک و حد ضرر روزانه را درست وارد کن");
+    return;
+  }
+
+  AEGIS_CONFIG.thresholdGo = goVal;
+  AEGIS_CONFIG.thresholdWait = waitVal;
+  AEGIS_CONFIG.accountSize = accVal;
+  AEGIS_CONFIG.defaultRisk = riskVal;
+  AEGIS_CONFIG.dailyMaxLoss = dailyVal;
+
+  localStorage.setItem("aegis_threshold", goVal);
+  localStorage.setItem("aegis_threshold_wait", waitVal);
+  localStorage.setItem("aegis_account_size", accVal);
+  localStorage.setItem("aegis_default_risk", riskVal);
+  localStorage.setItem("aegis_daily_max_loss", dailyVal);
+
+  applyRiskDefaults();
+  checkRevengeGuard();
+  showToast("تنظیمات ذخیره شد");
+});
+
+document.getElementById("clearHistoryBtn").addEventListener("click", function() {
+  if (confirm("آیا مطمئن هستید که تاریخچه پاک شود؟")) {
+    localStorage.removeItem("aegis_history");
+    renderHistory();
+    checkRevengeGuard();
+    showToast("تاریخچه پاک شد");
+  }
+});
+
+// اتصال تب چارت به فرم تحلیل
+document.getElementById("analyzeThisSymbolBtn").addEventListener("click", function() {
+  document.getElementById("symbol").value = currentSymbol;
+  switchTab("tab-home");
+  showToast(currentSymbol + " تو فرم پر شد - بقیه فیلدها رو کامل کن");
+  setTimeout(() => document.getElementById("price").focus(), 200);
+});
+
+// پشتیبان‌گیری کامل (تنظیمات + تاریخچه)
+document.getElementById("exportAllBtn").addEventListener("click", function() {
+  const backup = {
+    type: "aegis_full_backup",
+    version: 17,
+    exportedAt: new Date().toISOString(),
+    settings: {
+      threshold: AEGIS_CONFIG.thresholdGo,
+      thresholdWait: AEGIS_CONFIG.thresholdWait,
+      accountSize: AEGIS_CONFIG.accountSize,
+      defaultRisk: AEGIS_CONFIG.defaultRisk,
+      dailyMaxLoss: AEGIS_CONFIG.dailyMaxLoss,
+      theme: localStorage.getItem("aegis_theme") || "dark"
+    },
+    history: JSON.parse(localStorage.getItem("aegis_history") || "[]")
+  };
+  const blob = new Blob([JSON.stringify(backup, null, 2)], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `aegis-backup-${new Date().toISOString().slice(0,10)}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast("فایل پشتیبان کامل دانلود شد");
+});
+
+document.getElementById("importAllInput").addEventListener("change", function(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(evt) {
+    try {
+      const backup = JSON.parse(evt.target.result);
+      if (backup.type !== "aegis_full_backup") {
+        showToast("این فایل یه پشتیبان معتبر آگیس نیست");
+        return;
+      }
+      if (backup.settings) {
+        AEGIS_CONFIG.thresholdGo = backup.settings.threshold || AEGIS_CONFIG.thresholdGo;
+        AEGIS_CONFIG.thresholdWait = backup.settings.thresholdWait || AEGIS_CONFIG.thresholdWait;
+        AEGIS_CONFIG.accountSize = backup.settings.accountSize || AEGIS_CONFIG.accountSize;
+        AEGIS_CONFIG.defaultRisk = backup.settings.defaultRisk || AEGIS_CONFIG.defaultRisk;
+        AEGIS_CONFIG.dailyMaxLoss = backup.settings.dailyMaxLoss || AEGIS_CONFIG.dailyMaxLoss;
+        localStorage.setItem("aegis_threshold", AEGIS_CONFIG.thresholdGo);
+        localStorage.setItem("aegis_threshold_wait", AEGIS_CONFIG.thresholdWait);
+        localStorage.setItem("aegis_account_size", AEGIS_CONFIG.accountSize);
+        localStorage.setItem("aegis_default_risk", AEGIS_CONFIG.defaultRisk);
+        localStorage.setItem("aegis_daily_max_loss", AEGIS_CONFIG.dailyMaxLoss);
+        document.getElementById("cfgThreshold").value = AEGIS_CONFIG.thresholdGo;
+        document.getElementById("cfgWait").value = AEGIS_CONFIG.thresholdWait;
+        document.getElementById("cfgAccountSize").value = AEGIS_CONFIG.accountSize;
+        document.getElementById("cfgDefaultRisk").value = AEGIS_CONFIG.defaultRisk;
+        document.getElementById("cfgDailyMaxLoss").value = AEGIS_CONFIG.dailyMaxLoss;
+        if (backup.settings.theme) {
+          localStorage.setItem("aegis_theme", backup.settings.theme);
+          isLightTheme = backup.settings.theme === "light";
+          applyTheme(isLightTheme);
+        }
+      }
+      if (Array.isArray(backup.history)) {
+        localStorage.setItem("aegis_history", JSON.stringify(backup.history));
+        renderHistory();
+        checkRevengeGuard();
+      }
+      applyRiskDefaults();
+      showToast("پشتیبان با موفقیت بازیابی شد");
+    } catch (err) {
+      showToast("خطا در خواندن فایل پشتیبان");
+    }
+    e.target.value = "";
+  };
+  reader.readAsText(file);
+});
+
+// مقداردهی اولیه تنظیمات
+document.getElementById("cfgThreshold").value = AEGIS_CONFIG.thresholdGo;
+document.getElementById("cfgWait").value = AEGIS_CONFIG.thresholdWait;
+document.getElementById("cfgAccountSize").value = AEGIS_CONFIG.accountSize;
+document.getElementById("cfgDefaultRisk").value = AEGIS_CONFIG.defaultRisk;
+document.getElementById("cfgDailyMaxLoss").value = AEGIS_CONFIG.dailyMaxLoss;
+applyRiskDefaults();
+
+// بررسی اولیه محافظ روانی هنگام باز شدن اپ
+checkRevengeGuard();
+</script>
+</body>
+</html>
