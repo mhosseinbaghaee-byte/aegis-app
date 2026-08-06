@@ -137,9 +137,15 @@ jobs:
         run: |
           git config user.name "aegis-bot"
           git config user.email "bot@aegis.local"
-          find . -maxdepth 4 -iname "*.apk" -exec cp {} ./aegis-release.apk \; || true
+          echo "--- searching for apk ---"
+          find . -iname "*.apk" -not -path "*/node_modules/*"
+          APK_PATH=$(find . -iname "*.apk" -not -path "*/node_modules/*" | head -n 1)
+          echo "found: $APK_PATH"
+          if [ -n "$APK_PATH" ]; then
+            cp "$APK_PATH" ./aegis-release.apk
+            git add -f aegis-release.apk
+          fi
           git add build-output.log
-          [ -f "./aegis-release.apk" ] && git add -f aegis-release.apk
           git commit -m "Final build log + APK [skip ci]" || echo "nothing to commit"
           git push || echo "push failed"
 
