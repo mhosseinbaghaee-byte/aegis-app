@@ -68,6 +68,26 @@ jobs:
               incr counter
               send "IR\r"; exp_continue
             }
+            -re "(?i)first and last name" {
+              incr counter
+              send "Aegis Developer\r"; exp_continue
+            }
+            -re "(?i)organizational unit" {
+              incr counter
+              send "Aegis\r"; exp_continue
+            }
+            -re "(?i)name of your organization" {
+              incr counter
+              send "Aegis\r"; exp_continue
+            }
+            -re "(?i)city or locality" {
+              incr counter
+              send "Tehran\r"; exp_continue
+            }
+            -re "(?i)state or province" {
+              incr counter
+              send "Tehran\r"; exp_continue
+            }
             timeout {
               incr counter
               if {$counter > $max_steps} {
@@ -112,13 +132,15 @@ jobs:
         if: always()
         run: find . -maxdepth 4 -iname "*.apk" -o -iname "*.aab" || true
 
-      - name: Commit final build log
+      - name: Commit final build log and APK
         if: always()
         run: |
           git config user.name "aegis-bot"
           git config user.email "bot@aegis.local"
+          find . -maxdepth 4 -iname "*.apk" -exec cp {} ./aegis-release.apk \; || true
           git add build-output.log
-          git commit -m "Final build log [skip ci]" || echo "nothing to commit"
+          [ -f "./aegis-release.apk" ] && git add -f aegis-release.apk
+          git commit -m "Final build log + APK [skip ci]" || echo "nothing to commit"
           git push || echo "push failed"
 
       - name: Upload APK artifact
