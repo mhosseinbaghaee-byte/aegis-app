@@ -42,12 +42,27 @@ jobs:
             -storepass password123 -keypass password123 \
             -dname "CN=Aegis, OU=Aegis, O=Aegis, L=Tehran, S=Tehran, C=IR"
 
+      - name: Install expect
+        run: sudo apt-get update -y && sudo apt-get install -y expect
+
       - name: Build APK with Bubblewrap
         id: build
         continue-on-error: true
         run: |
-          set -o pipefail
-          printf "no\npassword123\npassword123\n" | bubblewrap build 2>&1 | tee build-output.log
+          cat > build.exp << 'EOF'
+          #!/usr/bin/expect -f
+          set timeout 600
+          log_user 1
+          spawn bubblewrap build
+          expect {
+            -re "regenerate.*\\(Y/n\\)" { send "no\r"; exp_continue }
+            -re "Password for the Key Store" { send "password123\r"; exp_continue }
+            -re "Password for the Key\\b" { send "password123\r"; exp_continue }
+            eof
+          }
+          EOF
+          chmod +x build.exp
+          ./build.exp 2>&1 | tee build-output.log
 
       - name: List output files
         run: find . -maxdepth 2 -iname "*.apk" -o -iname "*.aab" || true
