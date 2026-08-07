@@ -115,18 +115,11 @@ jobs:
           git commit -m "checkpoint: init log [skip ci]" || echo "nothing to commit"
           git push || echo "push failed"
 
-      - name: Build APK if gradlew exists
+      - name: Verify APK was built and signed by bubblewrap
         if: always()
-        continue-on-error: true
-        timeout-minutes: 8
         run: |
-          cd android-build
-          if [ -f "./gradlew" ]; then
-            echo "gradlew found, building release APK"
-            ./gradlew assembleRelease --stacktrace 2>&1 | tee -a ../build-output.log
-          else
-            echo "NO_GRADLEW_FOUND" | tee -a ../build-output.log
-          fi
+          echo "--- searching for apk produced by bubblewrap init ---"
+          find . -iname "*.apk" -not -path "*/node_modules/*" || true
 
       - name: List output files
         if: always()
@@ -137,13 +130,25 @@ jobs:
         run: |
           git config user.name "aegis-bot"
           git config user.email "bot@aegis.local"
-          echo "--- searching for apk ---"
+          echo "--- searching for apk candidates ---"
           find . -iname "*.apk" -not -path "*/node_modules/*"
-          APK_PATH=$(find . -iname "*.apk" -not -path "*/node_modules/*" | head -n 1)
-          echo "found: $APK_PATH"
-          if [ -n "$APK_PATH" ]; then
-            cp "$APK_PATH" ./aegis-release.apk
+          FOUND_SIGNED=""
+          while IFS= read -r candidate; do
+            if unzip -l "$candidate" | grep -qi "META-INF/.*\.RSA\|META-INF/.*\.DSA\|META-INF/.*\.EC"; then
+              echo "signed candidate: $candidate"
+              FOUND_SIGNED="$candidate"
+              break
+            else
+              echo "unsigned (skipping): $candidate"
+            fi
+          done < <(find . -iname "*.apk" -not -path "*/node_modules/*")
+
+          if [ -n "$FOUND_SIGNED" ]; then
+            cp "$FOUND_SIGNED" ./aegis-release.apk
             git add -f aegis-release.apk
+            echo "SIGNATURE_OK: $FOUND_SIGNED" | tee -a build-output.log
+          else
+            echo "SIGNATURE_MISSING_ON_ALL_CANDIDATES - refusing to publish an unsigned APK" | tee -a build-output.log
           fi
           git add build-output.log
           git commit -m "Final build log + APK [skip ci]" || echo "nothing to commit"
