@@ -162,3 +162,4 @@ drwxr-xr-x 3 runner runner 4096 Aug  7 20:46 gradle
 -rw-r--r-- 1 runner runner   15 Aug  7 20:46 settings.gradle
 -rw-r--r-- 1 runner runner 7635 Aug  7 20:46 store_icon.png
 -rw-r--r-- 1 runner runner 1579 Aug  7 20:46 twa-manifest.json
+SIGNATURE_MISSING_ON_ALL_CANDIDATES - refusing to publish an unsigned APK
