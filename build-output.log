@@ -206,4 +206,4 @@ An existing key store could not be found at "/home/runner/work/aegis-app/aegis-a
 [31m>> [39mMinimum length is 1 but input is 0.[1A[38D[39C[1B[2K[1A[2K[G[32m?[39m [1mFirst and Last names (eg: John Doe):[22m[0m [0m
 [31m>> [39mMinimum length is 1 but input is 0.[1A[38D[39C[1B[2K[1A[2K[G[32m?[39m [1mFirst and Last names (eg: John Doe):[22m[0m [0m
 [31m>> [39mMinimum length is 1 but input is 0.[1A[38D[39C[1B[2K[1A[2K[G[32m?[39m [1mFirst and Last names (eg: John Doe):[22m[0m [0m
-[31m>> [39mMinimum length is 1 but input is 0.[1A[38D[39C
+[31m>> [39mMinimum length is 1 but input is 0.[1A[38D[39CSIGNATURE_MISSING_ON_ALL_CANDIDATES - refusing to publish an unsigned APK
