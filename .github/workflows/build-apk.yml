@@ -37,12 +37,21 @@ jobs:
           }
           EOF
 
+      - name: Pre-generate signing keystore (avoid fragile interactive wizard)
+        run: |
+          mkdir -p android-build
+          cd android-build
+          keytool -genkeypair -v -keystore android.keystore -alias androidkey \
+            -keyalg RSA -keysize 2048 -validity 10000 \
+            -storepass password123 -keypass password123 \
+            -dname "CN=Aegis Developer, OU=Aegis, O=Aegis, L=Tehran, S=Tehran, C=IR"
+          ls -la android.keystore
+
       - name: Init APK project with Bubblewrap (silence-based)
         id: init
         continue-on-error: true
         timeout-minutes: 10
         run: |
-          mkdir -p android-build
           cd android-build
           cat > init.exp << 'EOF'
           #!/usr/bin/expect -f
