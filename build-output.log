@@ -141,25 +141,24 @@ Read more about Android signing keys at:
 [0m[36m/home/runner/work/aegis-app/aegis-app/android-build/android.keystore[39m[1A[68D[90C
 [1B[32m?[39m [1mKey name:[22m[0m [0m[2m(android) [22m[22D[22C[2K[G[32m?[39m [1mKey name:[22m[0m [0m[36mandroid[39m[19D[19C
 Generating Android Project.
-7[?7l[1G >> [░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░] 0%[0K[1G >> [██████████████████░░░░░░░░░░░░░░░░░░░░░░] 44%[0K[1G >> [██████████████████████░░░░░░░░░░░░░░░░░░] 55%[0K[1G >> [███████████████████████████████░░░░░░░░░] 77%[0K[1G >> [████████████████████████████████████████] 100%[0K[?7h8
+7[?7l[1G >> [░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░] 0%[0K[1G >> [██████████████████░░░░░░░░░░░░░░░░░░░░░░] 44%[0K[1G >> [██████████████████████░░░░░░░░░░░░░░░░░░] 55%[0K[1G >> [████████████████████████████████████░░░░] 88%[0K[1G >> [████████████████████████████████████████] 100%[0K[?7h8
 
 Project generated successfully. Build it by running bubblewrap build
 [?25hREACHED_EOF_NORMALLY after 17 steps
 EXIT_CODE_OF_EXPECT: 0
 --- ls after init ---
 total 68
-drwxr-xr-x 4 runner runner 4096 Aug  7 20:46 .
-drwxr-xr-x 5 runner runner 4096 Aug  7 20:44 ..
--rw-r--r-- 1 runner runner 2752 Aug  7 20:44 android.keystore
-drwxr-xr-x 3 runner runner 4096 Aug  7 20:46 app
--rw-r--r-- 1 runner runner 1130 Aug  7 20:46 build.gradle
-drwxr-xr-x 3 runner runner 4096 Aug  7 20:46 gradle
--rw-r--r-- 1 runner runner  751 Aug  7 20:46 gradle.properties
--rwxr-xr-x 1 runner runner 8706 Aug  7 20:46 gradlew
--rw-r--r-- 1 runner runner 2918 Aug  7 20:46 gradlew.bat
--rwxr-xr-x 1 runner runner 1430 Aug  7 20:44 init.exp
--rw-r--r-- 1 runner runner   40 Aug  7 20:46 manifest-checksum.txt
--rw-r--r-- 1 runner runner   15 Aug  7 20:46 settings.gradle
--rw-r--r-- 1 runner runner 7635 Aug  7 20:46 store_icon.png
--rw-r--r-- 1 runner runner 1579 Aug  7 20:46 twa-manifest.json
-SIGNATURE_MISSING_ON_ALL_CANDIDATES - refusing to publish an unsigned APK
+drwxr-xr-x 4 runner runner 4096 Aug  7 20:52 .
+drwxr-xr-x 5 runner runner 4096 Aug  7 20:50 ..
+-rw-r--r-- 1 runner runner 2746 Aug  7 20:50 android.keystore
+drwxr-xr-x 3 runner runner 4096 Aug  7 20:52 app
+-rw-r--r-- 1 runner runner 1130 Aug  7 20:52 build.gradle
+drwxr-xr-x 3 runner runner 4096 Aug  7 20:52 gradle
+-rw-r--r-- 1 runner runner  751 Aug  7 20:52 gradle.properties
+-rwxr-xr-x 1 runner runner 8706 Aug  7 20:52 gradlew
+-rw-r--r-- 1 runner runner 2918 Aug  7 20:52 gradlew.bat
+-rwxr-xr-x 1 runner runner 1430 Aug  7 20:50 init.exp
+-rw-r--r-- 1 runner runner   40 Aug  7 20:52 manifest-checksum.txt
+-rw-r--r-- 1 runner runner   15 Aug  7 20:52 settings.gradle
+-rw-r--r-- 1 runner runner 7635 Aug  7 20:52 store_icon.png
+-rw-r--r-- 1 runner runner 1579 Aug  7 20:52 twa-manifest.json
