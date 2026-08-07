@@ -41,7 +41,7 @@ jobs:
         run: |
           mkdir -p android-build
           cd android-build
-          keytool -genkeypair -v -keystore android.keystore -alias androidkey \
+          keytool -genkeypair -v -keystore android.keystore -alias android \
             -keyalg RSA -keysize 2048 -validity 10000 \
             -storepass password123 -keypass password123 \
             -dname "CN=Aegis Developer, OU=Aegis, O=Aegis, L=Tehran, S=Tehran, C=IR"
@@ -129,6 +129,19 @@ jobs:
         run: |
           echo "--- searching for apk produced by bubblewrap init ---"
           find . -iname "*.apk" -not -path "*/node_modules/*" || true
+
+      - name: Build + sign APK (init only scaffolds, doesn't build)
+        if: always()
+        continue-on-error: true
+        timeout-minutes: 8
+        run: |
+          cd android-build
+          if [ -f "./gradlew" ]; then
+            echo "gradlew found, running actual release build now"
+            ./gradlew assembleRelease --stacktrace 2>&1 | tee -a ../build-output.log
+          else
+            echo "NO_GRADLEW_FOUND - init must have failed before scaffolding" | tee -a ../build-output.log
+          fi
 
       - name: List output files
         if: always()
