@@ -150,6 +150,7 @@ jobs:
       - name: Commit final build log and APK
         if: always()
         run: |
+          {
           git config user.name "aegis-bot"
           git config user.email "bot@aegis.local"
           echo "--- searching for apk candidates ---"
@@ -173,11 +174,12 @@ jobs:
 
           if [ -n "$FOUND_SIGNED" ]; then
             cp "$FOUND_SIGNED" ./aegis-release.apk
-            git add -f aegis-release.apk
-            echo "SIGNATURE_OK: $FOUND_SIGNED" | tee -a build-output.log
+            echo "SIGNATURE_OK: $FOUND_SIGNED"
           else
-            echo "SIGNATURE_MISSING_ON_ALL_CANDIDATES - refusing to publish an unsigned APK" | tee -a build-output.log
+            echo "SIGNATURE_MISSING_ON_ALL_CANDIDATES - refusing to publish an unsigned APK"
           fi
+          } 2>&1 | tee -a build-output.log
+          [ -f "./aegis-release.apk" ] && git add -f aegis-release.apk
           git add build-output.log
           git commit -m "Final build log + APK [skip ci]" || echo "nothing to commit"
           git push || echo "push failed"
