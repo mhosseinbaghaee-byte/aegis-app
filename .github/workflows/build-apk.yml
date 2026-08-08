@@ -156,8 +156,14 @@ jobs:
           find . -iname "*.apk" -not -path "*/node_modules/*"
           FOUND_SIGNED=""
           while IFS= read -r candidate; do
-            if unzip -l "$candidate" | grep -qi "META-INF/.*\.RSA\|META-INF/.*\.DSA\|META-INF/.*\.EC"; then
-              echo "signed candidate: $candidate"
+            FILE_INFO=$(file "$candidate")
+            echo "checking $candidate -> $FILE_INFO"
+            if echo "$FILE_INFO" | grep -qi "APK Signing Block"; then
+              echo "signed candidate (v2/v3): $candidate"
+              FOUND_SIGNED="$candidate"
+              break
+            elif unzip -l "$candidate" | grep -qi "META-INF/.*\.RSA\|META-INF/.*\.DSA\|META-INF/.*\.EC"; then
+              echo "signed candidate (v1/jar): $candidate"
               FOUND_SIGNED="$candidate"
               break
             else
