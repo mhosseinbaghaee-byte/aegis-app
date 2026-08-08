@@ -141,100 +141,24 @@ Read more about Android signing keys at:
 [0m[36m/home/runner/work/aegis-app/aegis-app/android-build/android.keystore[39m[1A[68D[90C
 [1B[32m?[39m [1mKey name:[22m[0m [0m[2m(android) [22m[22D[22C[2K[G[32m?[39m [1mKey name:[22m[0m [0m[36mandroid[39m[19D[19C
 Generating Android Project.
-7[?7l[1G >> [░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░] 0%[0K[1G >> [██████████████████░░░░░░░░░░░░░░░░░░░░░░] 44%[0K[1G >> [██████████████████████░░░░░░░░░░░░░░░░░░] 55%[0K[1G >> [███████████████████████████████░░░░░░░░░] 77%[0K[1G >> [████████████████████████████████████░░░░] 88%[0K[1G >> [████████████████████████████████████████] 100%[0K[?7h8
+7[?7l[1G >> [░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░] 0%[0K[1G >> [██████████████████░░░░░░░░░░░░░░░░░░░░░░] 44%[0K[1G >> [██████████████████████░░░░░░░░░░░░░░░░░░] 55%[0K[1G >> [███████████████████████████░░░░░░░░░░░░░] 66%[0K[1G >> [████████████████████████████████████░░░░] 88%[0K[1G >> [████████████████████████████████████████] 100%[0K[?7h8
 
 Project generated successfully. Build it by running bubblewrap build
 [?25hREACHED_EOF_NORMALLY after 17 steps
 EXIT_CODE_OF_EXPECT: 0
 --- ls after init ---
 total 68
-drwxr-xr-x 4 runner runner 4096 Aug  8 01:44 .
-drwxr-xr-x 5 runner runner 4096 Aug  8 01:42 ..
--rw-r--r-- 1 runner runner 2746 Aug  8 01:42 android.keystore
-drwxr-xr-x 3 runner runner 4096 Aug  8 01:44 app
--rw-r--r-- 1 runner runner 1130 Aug  8 01:44 build.gradle
-drwxr-xr-x 3 runner runner 4096 Aug  8 01:44 gradle
--rw-r--r-- 1 runner runner  751 Aug  8 01:44 gradle.properties
--rwxr-xr-x 1 runner runner 8706 Aug  8 01:44 gradlew
--rw-r--r-- 1 runner runner 2918 Aug  8 01:44 gradlew.bat
--rwxr-xr-x 1 runner runner 1430 Aug  8 01:42 init.exp
--rw-r--r-- 1 runner runner   40 Aug  8 01:44 manifest-checksum.txt
--rw-r--r-- 1 runner runner   15 Aug  8 01:44 settings.gradle
--rw-r--r-- 1 runner runner 7635 Aug  8 01:44 store_icon.png
--rw-r--r-- 1 runner runner 1579 Aug  8 01:44 twa-manifest.json
-Downloading https://services.gradle.org/distributions/gradle-8.11.1-bin.zip
-..................................................................................................................................
-
-Welcome to Gradle 8.11.1!
-
-Here are the highlights of this release:
- - Parallel load and store for Configuration Cache
- - Java compilation errors at the end of the build output
- - Consolidated report for warnings and deprecations
-
-For more details see https://docs.gradle.org/8.11.1/release-notes.html
-
-Starting a Gradle Daemon (subsequent builds will be faster)
-> Task :app:generateShorcutsFile UP-TO-DATE
-> Task :app:preBuild UP-TO-DATE
-> Task :app:preReleaseBuild UP-TO-DATE
-> Task :app:mergeReleaseJniLibFolders
-> Task :app:mergeReleaseNativeLibs NO-SOURCE
-> Task :app:stripReleaseDebugSymbols NO-SOURCE
-> Task :app:extractReleaseNativeSymbolTables NO-SOURCE
-> Task :app:mergeReleaseNativeDebugMetadata NO-SOURCE
-> Task :app:javaPreCompileRelease
-> Task :app:checkReleaseDuplicateClasses
-> Task :app:checkReleaseAarMetadata
-> Task :app:generateReleaseResValues
-> Task :app:mapReleaseSourceSetPaths
-> Task :app:generateReleaseResources
-> Task :app:packageReleaseResources
-> Task :app:mergeReleaseResources
-> Task :app:createReleaseCompatibleScreenManifests
-> Task :app:extractDeepLinksRelease
-> Task :app:parseReleaseLocalResources
-
-> Task :app:processReleaseMainManifest
-package="io.github.mhosseinbaghaee_byte.twa" found in source AndroidManifest.xml: /home/runner/work/aegis-app/aegis-app/android-build/app/src/main/AndroidManifest.xml.
-Setting the namespace via the package attribute in the source AndroidManifest.xml is no longer supported, and the value is ignored.
-Recommendation: remove package="io.github.mhosseinbaghaee_byte.twa" from the source AndroidManifest.xml: /home/runner/work/aegis-app/aegis-app/android-build/app/src/main/AndroidManifest.xml.
-
-> Task :app:processReleaseManifest
-> Task :app:mergeReleaseArtProfile
-> Task :app:processReleaseManifestForPackage
-> Task :app:extractProguardFiles
-> Task :app:processReleaseJavaRes NO-SOURCE
-> Task :app:mergeReleaseStartupProfile
-> Task :app:mergeReleaseShaders
-> Task :app:compileReleaseShaders NO-SOURCE
-> Task :app:generateReleaseAssets UP-TO-DATE
-> Task :app:mergeReleaseAssets
-> Task :app:compressReleaseAssets
-> Task :app:processReleaseResources
-> Task :app:extractReleaseVersionControlInfo
-> Task :app:mergeReleaseJavaResource
-> Task :app:compileReleaseJavaWithJavac
-> Task :app:mergeReleaseGeneratedProguardFiles
-> Task :app:collectReleaseDependencies
-> Task :app:sdkReleaseDependencyData
-> Task :app:writeReleaseAppMetadata
-> Task :app:optimizeReleaseResources
-> Task :app:writeReleaseSigningConfigVersions
-> Task :app:expandReleaseArtProfileWildcards
-> Task :app:minifyReleaseWithR8
-> Task :app:compileReleaseArtProfile
-> Task :app:packageRelease
-> Task :app:createReleaseApkListingFileRedirect
-> Task :app:assembleRelease
-[Incubating] Problems report is available at: file:///home/runner/work/aegis-app/aegis-app/android-build/build/reports/problems/problems-report.html
-
-Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
-
-You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
-
-For more on this, please refer to https://docs.gradle.org/8.11.1/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
-
-BUILD SUCCESSFUL in 1m 10s
-36 actionable tasks: 36 executed
-SIGNATURE_MISSING_ON_ALL_CANDIDATES - refusing to publish an unsigned APK
+drwxr-xr-x 4 runner runner 4096 Aug  8 01:56 .
+drwxr-xr-x 5 runner runner 4096 Aug  8 01:53 ..
+-rw-r--r-- 1 runner runner 2746 Aug  8 01:53 android.keystore
+drwxr-xr-x 3 runner runner 4096 Aug  8 01:56 app
+-rw-r--r-- 1 runner runner 1130 Aug  8 01:56 build.gradle
+drwxr-xr-x 3 runner runner 4096 Aug  8 01:56 gradle
+-rw-r--r-- 1 runner runner  751 Aug  8 01:56 gradle.properties
+-rwxr-xr-x 1 runner runner 8706 Aug  8 01:56 gradlew
+-rw-r--r-- 1 runner runner 2918 Aug  8 01:56 gradlew.bat
+-rwxr-xr-x 1 runner runner 1430 Aug  8 01:53 init.exp
+-rw-r--r-- 1 runner runner   40 Aug  8 01:56 manifest-checksum.txt
+-rw-r--r-- 1 runner runner   15 Aug  8 01:56 settings.gradle
+-rw-r--r-- 1 runner runner 7635 Aug  8 01:56 store_icon.png
+-rw-r--r-- 1 runner runner 1579 Aug  8 01:56 twa-manifest.json
