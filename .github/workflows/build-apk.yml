@@ -130,18 +130,38 @@ jobs:
           echo "--- searching for apk produced by bubblewrap init ---"
           find . -iname "*.apk" -not -path "*/node_modules/*" || true
 
-      - name: Build + sign APK (init only scaffolds, doesn't build)
+      - name: Build + sign APK with bubblewrap build (gradlew alone doesn't sign)
         if: always()
         continue-on-error: true
         timeout-minutes: 8
         run: |
           cd android-build
-          if [ -f "./gradlew" ]; then
-            echo "gradlew found, running actual release build now"
-            ./gradlew assembleRelease --stacktrace 2>&1 | tee -a ../build-output.log
-          else
-            echo "NO_GRADLEW_FOUND - init must have failed before scaffolding" | tee -a ../build-output.log
-          fi
+          cat > build.exp << 'EOF'
+          #!/usr/bin/expect -f
+          set timeout 8
+          log_user 1
+          set counter 0
+          set max_steps 30
+          spawn bubblewrap build
+          expect {
+            -re "(?i)assword" {
+              incr counter
+              send "password123\r"; exp_continue
+            }
+            -re "(?i)regenerate.*\\(Y/n\\)" {
+              incr counter
+              send "no\r"; exp_continue
+            }
+            timeout {
+              incr counter
+              if {$counter > $max_steps} { puts "LOOP_GUARD"; exit 2 }
+              send "\r"; exp_continue
+            }
+            eof { puts "BUBBLEWRAP_BUILD_DONE" }
+          }
+          EOF
+          chmod +x build.exp
+          ./build.exp 2>&1 | tee -a ../build-output.log
 
       - name: List output files
         if: always()
