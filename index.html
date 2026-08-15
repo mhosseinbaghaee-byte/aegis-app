@@ -4,16 +4,27 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#08090b">
+
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="آگیس AI">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="application-name" content="آگیس AI">
+<meta name="theme-color" content="#08090b" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#f4f5f8" media="(prefers-color-scheme: light)">
+<meta name="format-detection" content="telephone=no">
+<link rel="apple-touch-icon" sizes="180x180" href="icons/icon-180.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="icons/icon-512.png">
+
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="آگیس AI">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="application-name" content="آگیس AI">
 <meta name="description" content="دستیار هوشمند سخت‌گیر تحلیل بازار - مدیریت ریسک ساختاری">
-<title>آگیس AI · نسخه ۲۰.۲ | ماژولار + موتور پویا + API</title>
-<link rel="manifest" href="manifest.json">
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
-<link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
+<title>آگیس AI · نسخه ۲۰.۳.۲ PWA | قابل نصب روی آیفون</title>
 <link rel="apple-touch-icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' rx='110' fill='%2308090b'/><path d='M110 350 L200 260 L270 310 L400 160' stroke='%23f2b544' stroke-width='36' stroke-linecap='round' stroke-linejoin='round' fill='none'/><path d='M330 160 H400 V230' stroke='%23f2b544' stroke-width='36' stroke-linecap='round' stroke-linejoin='round' fill='none'/><circle cx='400' cy='160' r='18' fill='%23f2b544'/></svg>">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
 <style>
@@ -338,6 +349,35 @@ body {
 }
 @keyframes aegis-shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
 
+
+/* --- License lock --- */
+.license-overlay {
+  display: none; position: fixed; inset: 0; z-index: 9999;
+  background: rgba(0,0,0,0.82); backdrop-filter: blur(8px);
+  align-items: center; justify-content: center; padding: 20px;
+}
+.license-overlay.show { display: flex; }
+.license-card {
+  width: 100%; max-width: 360px; background: var(--card);
+  border: 1px solid var(--border); border-radius: 18px; padding: 22px;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.45);
+}
+.license-card h3 { margin: 0 0 8px; color: var(--gold); font-size: 18px; text-align: center; }
+.license-card p { margin: 0 0 14px; color: var(--muted); font-size: 13px; line-height: 1.7; text-align: center; }
+.license-card input {
+  width: 100%; padding: 12px; border-radius: 10px; border: 1px solid var(--border);
+  background: var(--card-2); color: var(--text); font-size: 15px; letter-spacing: 1px;
+  text-align: center; margin-bottom: 10px; box-sizing: border-box;
+}
+.license-card .license-err { color: var(--red); font-size: 12px; min-height: 18px; text-align: center; margin-bottom: 8px; }
+.license-remain { font-size: 12px; color: var(--muted); text-align: center; margin: 8px 0 0; }
+.license-remain strong { color: var(--gold); }
+.license-badge {
+  display: none; font-size: 11px; color: var(--green); border: 1px solid var(--green);
+  border-radius: 999px; padding: 2px 10px; margin-top: 6px;
+}
+.license-badge.on { display: inline-block; }
+
 </style>
 <script>
   if (localStorage.getItem("aegis_theme") === "light") {
@@ -346,6 +386,18 @@ body {
 </script>
 </head>
 <body>
+
+<div id="licenseOverlay" class="license-overlay" role="dialog" aria-modal="true">
+  <div class="license-card">
+    <h3>قفل فعال‌سازی</h3>
+    <p>۳ تحلیل رایگان تمام شد.<br>برای ادامه استفاده، کد فعال‌سازی را وارد کن.<br><small style="opacity:.8">فقط یک‌بار — بعد از فعال‌سازی دیگر رمز نمی‌خواهد.</small></p>
+    <input id="licenseCodeInput" type="text" placeholder="مثال: XXXXX-XXXXX" autocomplete="off" autocapitalize="characters">
+    <div id="licenseErr" class="license-err"></div>
+    <button type="button" id="licenseUnlockBtn" class="analyze-btn">فعال‌سازی دائمی این دستگاه</button>
+    <button type="button" id="licenseCloseBtn" class="analyze-btn secondary" style="margin-top:8px;background:transparent;border:1px solid var(--border);color:var(--muted);">بستن</button>
+  </div>
+</div>
+
 <div class="app">
 
   <!-- هدر -->
@@ -366,7 +418,8 @@ body {
           </defs>
         </svg>
       </div>
-      <p class="brand-sub">دستیار سخت‌گیر · نسخه ۲۰ · قیمت زنده + TA</p>
+      <span id="licenseBadge" class="license-badge">✓ نسخه فعال</span>
+<p class="brand-sub">دستیار سخت‌گیر · نسخه ۲۰ · قیمت زنده + TA</p>
 
 
 <div id="sessionBadge" style="display:inline-block;margin-top:6px;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;background:rgba(242,181,68,0.12);color:var(--gold);">در حال تشخیص سشن...</div>
@@ -509,6 +562,7 @@ body {
         <h3 class="section-title gold">تحلیل تکنیکال پیشرفته</h3>
         <div id="taBody" style="font-size:13px;line-height:1.9;color:var(--text);"></div>
       </div>
+      <p id="licenseRemain" class="license-remain"></p>
       <button id="analyzeBtn" class="analyze-btn">
         <span>تحلیل سخت‌گیرانه بازار</span>
         <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2.2">
@@ -2159,6 +2213,10 @@ document.getElementById("saveJournalBtn").addEventListener("click", function() {
 });
 
 document.getElementById("analyzeBtn").addEventListener("click", function () {
+  if (window.AegisLicense && AegisLicense.isLocked()) {
+    AegisLicense.showLicenseLock("۳ تحلیل رایگان تمام شده — کد فعال‌سازی لازم است");
+    return;
+  }
   clearErrors();
   checkRevengeGuard();
   const banner = document.getElementById("revengeWarning");
@@ -2228,6 +2286,16 @@ document.getElementById("analyzeBtn").addEventListener("click", function () {
   const result = aegisScore(data);
   const decision = aegisDecision(result, AEGIS_CONFIG);
   renderResult(result, decision, data);
+  if (window.AegisLicense && !AegisLicense.isLicensed()) {
+    const n = AegisLicense.bumpAnalysisCount();
+    AegisLicense.updateLicenseUI();
+    if (n >= AegisLicense.FREE_LIMIT) {
+      showToast("۳ تحلیل رایگان تمام شد — برای ادامه کد فعال‌سازی لازم است");
+      setTimeout(function () { AegisLicense.showLicenseLock(); }, 600);
+    } else {
+      showToast("تحلیل رایگان باقی‌مانده: " + (AegisLicense.FREE_LIMIT - n));
+    }
+  }
 });
 
 document.getElementById("saveSettingsBtn").addEventListener("click", function() {
@@ -2366,5 +2434,118 @@ applyRiskDefaults();
 checkRevengeGuard();
 
 </script>
+
+
+<script>
+/* Aegis License Gate - 3 free analyses then permanent unlock */
+(function () {
+  const LICENSE_API = "https://aegis-license.m-hosseinbaghaee.workers.dev";
+  const FREE_LIMIT = 3;
+
+  function getDeviceFp() {
+    let fp = localStorage.getItem("aegis_device_fp");
+    if (!fp) {
+      try { fp = "aegis-" + crypto.randomUUID(); }
+      catch (e) { fp = "aegis-" + Date.now().toString(36) + "-" + Math.random().toString(36).slice(2, 10); }
+      localStorage.setItem("aegis_device_fp", fp);
+    }
+    return fp;
+  }
+  function isLicensed() { return localStorage.getItem("aegis_license_ok") === "1"; }
+  function getAnalysisCount() { return parseInt(localStorage.getItem("aegis_analysis_count") || "0", 10) || 0; }
+  function setAnalysisCount(n) { localStorage.setItem("aegis_analysis_count", String(n)); }
+  function bumpAnalysisCount() { const n = getAnalysisCount() + 1; setAnalysisCount(n); return n; }
+  function isLocked() { return !isLicensed() && getAnalysisCount() >= FREE_LIMIT; }
+
+  function updateLicenseUI() {
+    const remainEl = document.getElementById("licenseRemain");
+    const badge = document.getElementById("licenseBadge");
+    if (isLicensed()) {
+      if (remainEl) remainEl.innerHTML = "نسخه کامل — بدون محدودیت تحلیل";
+      if (badge) badge.classList.add("on");
+    } else {
+      const left = Math.max(0, FREE_LIMIT - getAnalysisCount());
+      if (remainEl) {
+        remainEl.innerHTML = left > 0
+          ? ("تحلیل رایگان باقی‌مانده: <strong>" + left + "</strong> از " + FREE_LIMIT)
+          : "تحلیل رایگان تمام شد — برای ادامه کد فعال‌سازی لازم است";
+      }
+      if (badge) badge.classList.remove("on");
+    }
+  }
+  function showLicenseLock(msg) {
+    const ov = document.getElementById("licenseOverlay");
+    const err = document.getElementById("licenseErr");
+    if (err) err.textContent = msg || "";
+    if (ov) ov.classList.add("show");
+    const input = document.getElementById("licenseCodeInput");
+    if (input) setTimeout(function () { input.focus(); }, 200);
+  }
+  function hideLicenseLock() {
+    const ov = document.getElementById("licenseOverlay");
+    if (ov) ov.classList.remove("show");
+  }
+  async function unlockWithCode(code) {
+    const err = document.getElementById("licenseErr");
+    const btn = document.getElementById("licenseUnlockBtn");
+    code = (code || "").trim().toUpperCase();
+    if (!code) { if (err) err.textContent = "کد را وارد کن"; return false; }
+    if (btn) { btn.disabled = true; btn.textContent = "در حال بررسی..."; }
+    try {
+      const res = await fetch(LICENSE_API + "/verify", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ code: code, fingerprint: getDeviceFp() })
+      });
+      const data = await res.json();
+      if (data && data.ok) {
+        localStorage.setItem("aegis_license_ok", "1");
+        localStorage.setItem("aegis_license_code", code);
+        hideLicenseLock();
+        updateLicenseUI();
+        if (typeof showToast === "function") showToast("فعال شد — دیگر نیازی به کد نیست");
+        return true;
+      }
+      if (err) err.textContent = (data && data.error) || "کد نامعتبر است";
+      return false;
+    } catch (e) {
+      if (err) err.textContent = "خطا در ارتباط با سرور — اینترنت را چک کن";
+      return false;
+    } finally {
+      if (btn) { btn.disabled = false; btn.textContent = "فعال‌سازی دائمی این دستگاه"; }
+    }
+  }
+
+  window.AegisLicense = {
+    isLocked: isLocked, isLicensed: isLicensed, bumpAnalysisCount: bumpAnalysisCount,
+    getAnalysisCount: getAnalysisCount, showLicenseLock: showLicenseLock,
+    updateLicenseUI: updateLicenseUI, FREE_LIMIT: FREE_LIMIT
+  };
+
+  function boot() {
+    updateLicenseUI();
+    getDeviceFp();
+    const unlockBtn = document.getElementById("licenseUnlockBtn");
+    const closeBtn = document.getElementById("licenseCloseBtn");
+    const input = document.getElementById("licenseCodeInput");
+    if (unlockBtn) unlockBtn.addEventListener("click", function () { unlockWithCode(input && input.value); });
+    if (closeBtn) closeBtn.addEventListener("click", hideLicenseLock);
+    if (input) input.addEventListener("keydown", function (e) { if (e.key === "Enter") unlockWithCode(input.value); });
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
+  else boot();
+})();
+
+</script>
+
+<script>
+// PWA service worker
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", function () {
+    navigator.serviceWorker.register("./sw.js").catch(function () {});
+  });
+}
+</script>
+
 </body>
 </html>
