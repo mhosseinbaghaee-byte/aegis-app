@@ -4,27 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#08090b">
-
-<link rel="manifest" href="manifest.webmanifest">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="آگیس AI">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="application-name" content="آگیس AI">
-<meta name="theme-color" content="#08090b" media="(prefers-color-scheme: dark)">
-<meta name="theme-color" content="#f4f5f8" media="(prefers-color-scheme: light)">
-<meta name="format-detection" content="telephone=no">
-<link rel="apple-touch-icon" sizes="180x180" href="icons/icon-180.png">
-<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
-<link rel="icon" type="image/png" sizes="512x512" href="icons/icon-512.png">
-
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="آگیس AI">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="application-name" content="آگیس AI">
 <meta name="description" content="دستیار هوشمند سخت‌گیر تحلیل بازار - مدیریت ریسک ساختاری">
-<title>آگیس AI · نسخه ۲۰.۳.۲ PWA | قابل نصب روی آیفون</title>
+<title>آگیس AI · نسخه ۲۰.۳.۴ PWA</title>
 <link rel="apple-touch-icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' rx='110' fill='%2308090b'/><path d='M110 350 L200 260 L270 310 L400 160' stroke='%23f2b544' stroke-width='36' stroke-linecap='round' stroke-linejoin='round' fill='none'/><path d='M330 160 H400 V230' stroke='%23f2b544' stroke-width='36' stroke-linecap='round' stroke-linejoin='round' fill='none'/><circle cx='400' cy='160' r='18' fill='%23f2b544'/></svg>">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
 <style>
@@ -369,7 +355,60 @@ body {
   background: var(--card-2); color: var(--text); font-size: 15px; letter-spacing: 1px;
   text-align: center; margin-bottom: 10px; box-sizing: border-box;
 }
-.license-card .license-err { color: var(--red); font-size: 12px; min-height: 18px; text-align: center; margin-bottom: 8px; }
+.license-card 
+.license-buy {
+  margin: 14px 0 4px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: rgba(242, 181, 68, 0.08);
+  border: 1px solid rgba(242, 181, 68, 0.35);
+  text-align: right;
+}
+.license-buy strong {
+  display: block;
+  color: var(--gold);
+  font-size: 13.5px;
+  margin-bottom: 6px;
+}
+.license-buy p {
+  margin: 0 0 10px;
+  font-size: 12.5px;
+  line-height: 1.7;
+  color: var(--text);
+  opacity: 0.92;
+}
+.license-buy a, .license-buy button.license-support-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 11px;
+  border-radius: 10px;
+  background: linear-gradient(180deg, var(--gold), var(--gold-dark));
+  color: #1a1305;
+  font-weight: 800;
+  font-size: 13.5px;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-family);
+}
+.license-divider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 14px 0 10px;
+  color: var(--muted);
+  font-size: 11.5px;
+}
+.license-divider::before, .license-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.license-err { color: var(--red); font-size: 12px; min-height: 18px; text-align: center; margin-bottom: 8px; }
 .license-remain { font-size: 12px; color: var(--muted); text-align: center; margin: 8px 0 0; }
 .license-remain strong { color: var(--gold); }
 .license-badge {
@@ -390,7 +429,16 @@ body {
 <div id="licenseOverlay" class="license-overlay" role="dialog" aria-modal="true">
   <div class="license-card">
     <h3>قفل فعال‌سازی</h3>
-    <p>۳ تحلیل رایگان تمام شد.<br>برای ادامه استفاده، کد فعال‌سازی را وارد کن.<br><small style="opacity:.8">فقط یک‌بار — بعد از فعال‌سازی دیگر رمز نمی‌خواهد.</small></p>
+    <p>۳ تحلیل رایگان تمام شد.<br>برای ادامه استفاده، نسخه کامل را فعال کن.<br><small style="opacity:.8">فقط یک‌بار روی این گوشی — بعداً دیگر کد نمی‌خواهد.</small></p>
+
+    <div class="license-buy">
+      <strong>خرید کد فعال‌سازی دائمی</strong>
+      <p>برای دریافت کد فعال‌سازی دائمی، به پشتیبانی رسمی آگیس در پیام‌رسان بله پیام بده. پس از تأیید پرداخت، کد یک‌بارمصرف برایت ارسال می‌شود.</p>
+      <a id="licenseSupportLink" class="license-support-btn" href="https://t.me/" target="_blank" rel="noopener">پیام به <strong>AegisAI_Support</strong> در بله</a>
+    </div>
+
+    <div class="license-divider">اگر کد را داری</div>
+
     <input id="licenseCodeInput" type="text" placeholder="مثال: XXXXX-XXXXX" autocomplete="off" autocapitalize="characters">
     <div id="licenseErr" class="license-err"></div>
     <button type="button" id="licenseUnlockBtn" class="analyze-btn">فعال‌سازی دائمی این دستگاه</button>
@@ -2437,6 +2485,19 @@ checkRevengeGuard();
 
 
 <script>
+
+/* Support contact for license purchase — change telegram username */
+window.AEGIS_SUPPORT = {
+  // نمایش برای کاربر
+  displayName: "AegisAI_Support",
+  // آیدی واقعی پیام‌رسان بله (لینک)
+  baleId: "bghossein",
+  getLink: function () {
+    var u = (this.baleId || "").replace(/^@/, "").trim();
+    return u ? ("https://ble.ir/" + u) : "https://ble.ir/";
+  }
+};
+
 /* Aegis License Gate - 3 free analyses then permanent unlock */
 (function () {
   const LICENSE_API = "https://aegis-license.m-hosseinbaghaee.workers.dev";
@@ -2525,6 +2586,17 @@ checkRevengeGuard();
   function boot() {
     updateLicenseUI();
     getDeviceFp();
+    const supportLink = document.getElementById("licenseSupportLink");
+    if (supportLink && window.AEGIS_SUPPORT) {
+      supportLink.href = AEGIS_SUPPORT.getLink();
+      supportLink.innerHTML = "پیام به <strong>AegisAI_Support</strong> در بله";
+      if (!AEGIS_SUPPORT.baleId) {
+        supportLink.addEventListener("click", function (e) {
+          e.preventDefault();
+          if (typeof showToast === "function") showToast("پشتیبانی هنوز تنظیم نشده");
+        });
+      }
+    }
     const unlockBtn = document.getElementById("licenseUnlockBtn");
     const closeBtn = document.getElementById("licenseCloseBtn");
     const input = document.getElementById("licenseCodeInput");
@@ -2537,15 +2609,5 @@ checkRevengeGuard();
 })();
 
 </script>
-
-<script>
-// PWA service worker
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", function () {
-    navigator.serviceWorker.register("./sw.js").catch(function () {});
-  });
-}
-</script>
-
 </body>
 </html>
