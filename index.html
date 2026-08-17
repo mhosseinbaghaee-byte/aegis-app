@@ -10,7 +10,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="application-name" content="آگیس AI">
 <meta name="description" content="دستیار هوشمند سخت‌گیر تحلیل بازار - مدیریت ریسک ساختاری">
-<title>آگیس AI · نسخه ۲۰.۳.۴ PWA</title>
+<title>آگیس AI · نسخه ۲۰.۳.۵ PWA</title>
 <link rel="apple-touch-icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' rx='110' fill='%2308090b'/><path d='M110 350 L200 260 L270 310 L400 160' stroke='%23f2b544' stroke-width='36' stroke-linecap='round' stroke-linejoin='round' fill='none'/><path d='M330 160 H400 V230' stroke='%23f2b544' stroke-width='36' stroke-linecap='round' stroke-linejoin='round' fill='none'/><circle cx='400' cy='160' r='18' fill='%23f2b544'/></svg>">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
 <style>
@@ -2239,17 +2239,30 @@ document.getElementById("saveJournalBtn").addEventListener("click", function() {
     showToast("اول یک تحلیل معتبر انجام بده");
     return;
   }
-  // ریسک واقعی رو همین لحظه از فرم می‌خونیم - نه مقدار منجمدشده‌ی زمان تحلیل،
-  // چون کاربر معمولاً بعد از تحلیل میره تو ماشین‌حساب پوزیشن و ریسک رو تنظیم می‌کنه
-  const liveRiskPct = parseFloat(document.getElementById("riskPercent").value);
-  const liveAccountSize = parseFloat(document.getElementById("accountSize").value);
-  const liveRiskDollar = parseFloat(document.getElementById("accountRisk").value);
-  let finalRiskUsed = lastAnalysisData.riskUsed;
+  // همیشه ریسک را LIVE از ماشین‌حساب پوزیشن بخوان — نه riskUsed منجمدشده‌ی لحظه تحلیل
+  const riskPctEl = document.getElementById("riskPercent");
+  const sizeEl = document.getElementById("accountSize");
+  const riskDolEl = document.getElementById("accountRisk");
+  const liveRiskPct = riskPctEl ? parseFloat(riskPctEl.value) : NaN;
+  const liveAccountSize = sizeEl ? parseFloat(sizeEl.value) : NaN;
+  const liveRiskDollar = riskDolEl ? parseFloat(riskDolEl.value) : NaN;
+
+  let finalRiskUsed = null;
   if (!isNaN(liveRiskPct) && liveRiskPct > 0) {
     finalRiskUsed = liveRiskPct;
   } else if (!isNaN(liveRiskDollar) && liveRiskDollar > 0 && !isNaN(liveAccountSize) && liveAccountSize > 0) {
     finalRiskUsed = (liveRiskDollar / liveAccountSize) * 100;
+  } else if (lastAnalysisData.riskUsed != null && !isNaN(parseFloat(lastAnalysisData.riskUsed))) {
+    // فقط اگر فرم خالی بود، به‌عنوان آخرین راه
+    finalRiskUsed = parseFloat(lastAnalysisData.riskUsed);
+  } else {
+    finalRiskUsed = AEGIS_CONFIG.defaultRisk;
   }
+  // نرمال‌سازی عددی
+  finalRiskUsed = Math.round(finalRiskUsed * 1000) / 1000;
+  // همگام‌سازی تا استفاده‌های بعدی هم مقدار درست داشته باشند
+  lastAnalysisData.riskUsed = finalRiskUsed;
+
   saveToHistory(
     lastAnalysisData,
     lastAnalysisData.score,
@@ -2257,7 +2270,7 @@ document.getElementById("saveJournalBtn").addEventListener("click", function() {
     lastAnalysisData.reasons || [],
     finalRiskUsed
   );
-  showToast("در ژورنال ثبت شد — بعد از بسته شدن معامله نتیجه را در سابقه بزن");
+  showToast("در ژورنال ثبت شد · ریسک " + finalRiskUsed + "٪ — بعد از معامله نتیجه را در سابقه بزن");
 });
 
 document.getElementById("analyzeBtn").addEventListener("click", function () {
