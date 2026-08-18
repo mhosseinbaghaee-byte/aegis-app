@@ -1,12 +1,13 @@
 /* Aegis AI PWA service worker */
-const CACHE = 'aegis-v20.3.5b';
+const CACHE = 'aegis-v20.3.5c';
 const ASSETS = [
   './',
   './index.html',
   './manifest.webmanifest',
   './icons/icon-192.png',
   './icons/icon-512.png',
-  './icons/icon-180.png'
+  './icons/icon-180.png',
+  './apple-touch-icon.png'
 ];
 
 self.addEventListener('install', (event) => {
