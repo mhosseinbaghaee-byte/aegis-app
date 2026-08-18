@@ -1,5 +1,5 @@
 /* Aegis AI PWA service worker */
-const CACHE = 'aegis-v20.3.6';
+const CACHE = 'aegis-v20.3.6a';
 const ASSETS = [
   './',
   './index.html',
