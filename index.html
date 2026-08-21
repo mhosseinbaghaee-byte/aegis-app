@@ -411,6 +411,29 @@ body {
   line-height: 1.8;
   text-align: center;
 }
+.license-card-pay {
+  margin-top: 14px;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px dashed var(--gold);
+  background: rgba(242, 181, 68, 0.06);
+  text-align: center;
+}
+.license-card-label {
+  font-size: 12px;
+  color: var(--gold);
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.license-card-num {
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  color: var(--text);
+  margin: 4px 0 10px;
+  direction: ltr;
+  font-variant-numeric: tabular-nums;
+}
 .license-divider {
   display: flex;
   align-items: center;
@@ -455,6 +478,12 @@ body {
       <a id="licenseSupportLink" class="license-support-btn" href="https://beta.bale.ai/chat?uid=1239955457" target="_blank" rel="noopener">باز کردن ربات پرداخت در بله</a>
       <button type="button" id="licenseCopySupportLink" class="license-support-copy">کپی لینک ربات</button>
       <p class="license-support-note">اگر دکمه بالا در گوشی باز نشد، لینک ربات را کپی کن و داخل مرورگر یا خود برنامه بله باز کن.</p>
+      <div class="license-card-pay">
+        <div class="license-card-label">کارت‌به‌کارت</div>
+        <div class="license-card-num" id="licenseCardNumber" dir="ltr">6219-8619-1017-1650</div>
+        <button type="button" id="licenseCopyCardBtn" class="license-support-copy">کپی شماره کارت</button>
+        <p class="license-support-note">بعد از واریز، رسید را برای ربات بله بفرست تا کد فعال‌سازی برایت ارسال شود.</p>
+      </div>
     </div>
 
     <div class="license-divider">اگر کد را داری</div>
@@ -2527,6 +2556,9 @@ window.AEGIS_SUPPORT = {
   baleChatUrl: "https://beta.bale.ai/chat?uid=1239955457",
   // لینک قدیمی/نام کاربری فقط به عنوان مسیر جایگزین نگه داشته شده است.
   baleFallbackUrl: "https://ble.ir/Aegisaibot",
+  // شماره کارت برای کارت‌به‌کارت
+  cardNumber: "6219861910171650",
+  cardNumberDisplay: "6219-8619-1017-1650",
   getLink: function () {
     return this.baleChatUrl || this.baleFallbackUrl || "https://ble.ir/";
   }
@@ -2644,6 +2676,18 @@ window.AEGIS_SUPPORT = {
           if (typeof showToast === "function") showToast("لینک ربات کپی شد");
         } catch (e) {
           window.prompt("لینک ربات را کپی کن:", url);
+        }
+      });
+    }
+    const copyCardBtn = document.getElementById("licenseCopyCardBtn");
+    if (copyCardBtn && window.AEGIS_SUPPORT) {
+      copyCardBtn.addEventListener("click", async function () {
+        const num = AEGIS_SUPPORT.cardNumber || "";
+        try {
+          await navigator.clipboard.writeText(num);
+          if (typeof showToast === "function") showToast("شماره کارت کپی شد");
+        } catch (e) {
+          window.prompt("شماره کارت را کپی کن:", num);
         }
       });
     }
