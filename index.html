@@ -392,6 +392,25 @@ body {
   cursor: pointer;
   font-family: var(--font-family);
 }
+.license-support-copy {
+  width: 100%;
+  margin-top: 8px;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text);
+  font-family: var(--font-family);
+  font-weight: 700;
+  cursor: pointer;
+}
+.license-support-note {
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: 11.5px;
+  line-height: 1.8;
+  text-align: center;
+}
 .license-divider {
   display: flex;
   align-items: center;
@@ -432,8 +451,10 @@ body {
 
     <div class="license-buy">
       <strong>خرید کد فعال‌سازی دائمی</strong>
-      <p>برای دریافت کد فعال‌سازی دائمی، به پشتیبانی رسمی آگیس در پیام‌رسان بله پیام بده. پس از تأیید پرداخت، کد یک‌بارمصرف برایت ارسال می‌شود.</p>
-      <a id="licenseSupportLink" class="license-support-btn" href="https://ble.ir/Aegisaibot" target="_blank" rel="noopener">پیام به <strong>AegisAI_Support</strong> در بله</a>
+      <p>برای پرداخت درون‌برنامه‌ای و دریافت خودکار کد، وارد چت ربات رسمی آگیس در بله شو. اگر صفحه پرداخت باز نشد، اسکرین‌شات خطا را همان‌جا برای ربات ارسال کن.</p>
+      <a id="licenseSupportLink" class="license-support-btn" href="https://beta.bale.ai/chat?uid=1239955457" target="_blank" rel="noopener">باز کردن ربات پرداخت در بله</a>
+      <button type="button" id="licenseCopySupportLink" class="license-support-copy">کپی لینک ربات</button>
+      <p class="license-support-note">اگر دکمه بالا در گوشی باز نشد، لینک ربات را کپی کن و داخل مرورگر یا خود برنامه بله باز کن.</p>
     </div>
 
     <div class="license-divider">اگر کد را داری</div>
@@ -2498,15 +2519,16 @@ checkRevengeGuard();
 
 <script>
 
-/* Support contact for license purchase — change telegram username */
+/* Support contact for license purchase */
 window.AEGIS_SUPPORT = {
   // نمایش برای کاربر
-  displayName: "AegisAI_Support",
-  // آیدی واقعی پیام‌رسان بله (لینک)
-  baleId: "Aegisaibot",
+  displayName: "ربات پرداخت آگیس در بله",
+  // لینک مستقیم چت ربات بله؛ این لینک برای پرداخت و ارسال اسکرین‌شات خطا استفاده می‌شود.
+  baleChatUrl: "https://beta.bale.ai/chat?uid=1239955457",
+  // لینک قدیمی/نام کاربری فقط به عنوان مسیر جایگزین نگه داشته شده است.
+  baleFallbackUrl: "https://ble.ir/Aegisaibot",
   getLink: function () {
-    var u = (this.baleId || "").replace(/^@/, "").trim();
-    return u ? ("https://ble.ir/" + u) : "https://ble.ir/";
+    return this.baleChatUrl || this.baleFallbackUrl || "https://ble.ir/";
   }
 };
 
@@ -2601,13 +2623,29 @@ window.AEGIS_SUPPORT = {
     const supportLink = document.getElementById("licenseSupportLink");
     if (supportLink && window.AEGIS_SUPPORT) {
       supportLink.href = AEGIS_SUPPORT.getLink();
-      supportLink.innerHTML = "پیام به <strong>AegisAI_Support</strong> در بله";
-      if (!AEGIS_SUPPORT.baleId) {
-        supportLink.addEventListener("click", function (e) {
+      supportLink.innerHTML = "باز کردن ربات پرداخت در بله";
+      supportLink.addEventListener("click", function (e) {
+        const url = AEGIS_SUPPORT.getLink();
+        if (!url) {
           e.preventDefault();
-          if (typeof showToast === "function") showToast("پشتیبانی هنوز تنظیم نشده");
-        });
-      }
+          if (typeof showToast === "function") showToast("لینک ربات هنوز تنظیم نشده");
+          return;
+        }
+        // در بعضی WebViewها target=_blank باز نمی‌شود؛ تغییر location مسیر جایگزین مطمئن‌تری است.
+        setTimeout(function () { window.location.href = url; }, 80);
+      });
+    }
+    const copySupportBtn = document.getElementById("licenseCopySupportLink");
+    if (copySupportBtn && window.AEGIS_SUPPORT) {
+      copySupportBtn.addEventListener("click", async function () {
+        const url = AEGIS_SUPPORT.getLink();
+        try {
+          await navigator.clipboard.writeText(url);
+          if (typeof showToast === "function") showToast("لینک ربات کپی شد");
+        } catch (e) {
+          window.prompt("لینک ربات را کپی کن:", url);
+        }
+      });
     }
     const unlockBtn = document.getElementById("licenseUnlockBtn");
     const closeBtn = document.getElementById("licenseCloseBtn");
