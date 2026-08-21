@@ -10,13 +10,8 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="application-name" content="آگیس AI">
 <meta name="description" content="دستیار هوشمند سخت‌گیر تحلیل بازار - مدیریت ریسک ساختاری">
-<title>آگیس AI · نسخه ۲۰.۳.۵ | تک‌فایل + لایسنس یکپارچه</title>
-<link rel="manifest" href="manifest.webmanifest">
-<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-<link rel="apple-touch-icon" sizes="180x180" href="icons/icon-180.png">
-<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
-<link rel="icon" type="image/png" sizes="512x512" href="icons/icon-512.png">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
+<title>آگیس AI · نسخه ۲۰.۳.۷ | تک‌فایل + لایسنس یکپارچه</title>
+<link rel="apple-touch-icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
 <style>
 @font-face {
   font-family: 'IranianSans';
@@ -436,8 +431,11 @@ body {
   letter-spacing: 1.5px;
   color: var(--text);
   margin: 4px 0 10px;
-  direction: ltr;
+  direction: ltr !important;
+  unicode-bidi: isolate;
+  text-align: center;
   font-variant-numeric: tabular-nums;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 }
 .license-divider {
   display: flex;
@@ -485,7 +483,7 @@ body {
       <p class="license-support-note">اگر دکمه بالا در گوشی باز نشد، لینک ربات را کپی کن و داخل مرورگر یا خود برنامه بله باز کن.</p>
       <div class="license-card-pay">
         <div class="license-card-label">کارت‌به‌کارت</div>
-        <div class="license-card-num" id="licenseCardNumber" dir="ltr">6219-8619-1017-1650</div>
+        <div class="license-card-num" id="licenseCardNumber" dir="ltr" lang="en" style="direction:ltr;unicode-bidi:isolate;text-align:center">‎6219-8619-1017-1650‎</div>
         <button type="button" id="licenseCopyCardBtn" class="license-support-copy">کپی شماره کارت</button>
         <p class="license-support-note">بعد از واریز، رسید را برای ربات بله بفرست تا کد فعال‌سازی برایت ارسال شود.</p>
       </div>
@@ -2708,14 +2706,5 @@ window.AEGIS_SUPPORT = {
 })();
 
 </script>
-
-<script>
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", function () {
-    navigator.serviceWorker.register("./sw.js").catch(function () {});
-  });
-}
-</script>
-
 </body>
 </html>
