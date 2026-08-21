@@ -13,7 +13,7 @@
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
-<title>آگیس AI · نسخه ۲۰.۳.۸ | تک‌فایل + لایسنس یکپارچه</title>
+<title>آگیس AI · نسخه ۲۰.۳.۹ | تک‌فایل + لایسنس یکپارچه</title>
 <link rel="apple-touch-icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
 <style>
 @font-face {
@@ -501,11 +501,11 @@ body {
 
     <div class="license-buy">
       <strong>خرید کد فعال‌سازی</strong>
-      <p>از ربات بله پرداخت کن یا کارت‌به‌کارت بزن؛ رسید را برای ربات بفرست.</p>
+      <p>مبلغ ۲٬۰۰۰٬۰۰۰ ریال — از ربات بله پرداخت کن یا کارت‌به‌کارت بزن؛ رسید را برای ربات بفرست.</p>
       <a id="licenseSupportLink" class="license-support-btn" href="https://beta.bale.ai/chat?uid=1239955457" target="_blank" rel="noopener">باز کردن ربات بله</a>
       <button type="button" id="licenseCopySupportLink" class="license-support-copy">کپی لینک ربات</button>
       <div class="license-card-pay">
-        <div class="license-card-label">کارت‌به‌کارت</div>
+        <div class="license-card-label">مبلغ: ۲٬۰۰۰٬۰۰۰ ریال · کارت‌به‌کارت</div>
         <div class="license-card-num" id="licenseCardNumber" dir="ltr" lang="en" style="direction:ltr;unicode-bidi:isolate;text-align:center">‎6219-8619-1017-1650‎</div>
         <button type="button" id="licenseCopyCardBtn" class="license-support-copy">کپی شماره کارت</button>
         <p class="license-support-note">بعد از واریز، رسید را در بله برای ربات بفرست.</p>
@@ -2584,6 +2584,8 @@ window.AEGIS_SUPPORT = {
   baleFallbackUrl: "https://ble.ir/Aegisaibot",
   // شماره کارت برای کارت‌به‌کارت
   cardNumber: "6219861910171650",
+  priceIrr: 2000000,
+  priceLabel: "۲٬۰۰۰٬۰۰۰ ریال",
   cardNumberDisplay: "6219-8619-1017-1650",
   getLink: function () {
     return this.baleChatUrl || this.baleFallbackUrl || "https://ble.ir/";
