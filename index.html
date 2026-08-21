@@ -10,7 +10,10 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="application-name" content="آگیس AI">
 <meta name="description" content="دستیار هوشمند سخت‌گیر تحلیل بازار - مدیریت ریسک ساختاری">
-<title>آگیس AI · نسخه ۲۰.۳.۷ | تک‌فایل + لایسنس یکپارچه</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+<title>آگیس AI · نسخه ۲۰.۳.۸ | تک‌فایل + لایسنس یکپارچه</title>
 <link rel="apple-touch-icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
 <style>
 @font-face {
@@ -339,16 +342,33 @@ body {
 .license-overlay {
   display: none; position: fixed; inset: 0; z-index: 9999;
   background: rgba(0,0,0,0.82); backdrop-filter: blur(8px);
-  align-items: center; justify-content: center; padding: 20px;
+  align-items: flex-start; justify-content: center;
+  padding: max(12px, env(safe-area-inset-top)) 12px max(12px, env(safe-area-inset-bottom));
+  overflow-y: auto; -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
 }
 .license-overlay.show { display: flex; }
 .license-card {
   width: 100%; max-width: 360px; background: var(--card);
-  border: 1px solid var(--border); border-radius: 18px; padding: 22px;
+  border: 1px solid var(--border); border-radius: 18px; padding: 16px;
   box-shadow: 0 12px 40px rgba(0,0,0,0.45);
+  margin: 8px auto 24px;
+  max-height: none;
+  position: relative;
 }
-.license-card h3 { margin: 0 0 8px; color: var(--gold); font-size: 18px; text-align: center; }
-.license-card p { margin: 0 0 14px; color: var(--muted); font-size: 13px; line-height: 1.7; text-align: center; }
+.license-card-top {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 8px; margin-bottom: 6px;
+}
+.license-card-top h3 { margin: 0; flex: 1; text-align: center; }
+.license-x {
+  width: 36px; height: 36px; border-radius: 10px; border: 1px solid var(--border);
+  background: var(--card-2); color: var(--muted); font-size: 18px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  font-family: inherit;
+}
+.license-card h3 { margin: 0; color: var(--gold); font-size: 17px; text-align: center; }
+.license-card > p { margin: 0 0 10px; color: var(--muted); font-size: 12.5px; line-height: 1.65; text-align: center; }
 .license-card input {
   width: 100%; padding: 12px; border-radius: 10px; border: 1px solid var(--border);
   background: var(--card-2); color: var(--text); font-size: 15px; letter-spacing: 1px;
@@ -472,20 +492,23 @@ body {
 
 <div id="licenseOverlay" class="license-overlay" role="dialog" aria-modal="true">
   <div class="license-card">
-    <h3>قفل فعال‌سازی</h3>
-    <p>۳ تحلیل رایگان تمام شد.<br>برای ادامه استفاده، نسخه کامل را فعال کن.<br><small style="opacity:.8">فقط یک‌بار روی این گوشی — بعداً دیگر کد نمی‌خواهد.</small></p>
+    <div class="license-card-top">
+      <span style="width:36px"></span>
+      <h3>قفل فعال‌سازی</h3>
+      <button type="button" id="licenseCloseX" class="license-x" aria-label="بستن">✕</button>
+    </div>
+    <p>۳ تحلیل رایگان تمام شد. برای ادامه، نسخه کامل را فعال کن.<br><small style="opacity:.8">فقط یک‌بار روی این گوشی</small></p>
 
     <div class="license-buy">
-      <strong>خرید کد فعال‌سازی دائمی</strong>
-      <p>برای پرداخت درون‌برنامه‌ای و دریافت خودکار کد، وارد چت ربات رسمی آگیس در بله شو. اگر صفحه پرداخت باز نشد، اسکرین‌شات خطا را همان‌جا برای ربات ارسال کن.</p>
-      <a id="licenseSupportLink" class="license-support-btn" href="https://beta.bale.ai/chat?uid=1239955457" target="_blank" rel="noopener">باز کردن ربات پرداخت در بله</a>
+      <strong>خرید کد فعال‌سازی</strong>
+      <p>از ربات بله پرداخت کن یا کارت‌به‌کارت بزن؛ رسید را برای ربات بفرست.</p>
+      <a id="licenseSupportLink" class="license-support-btn" href="https://beta.bale.ai/chat?uid=1239955457" target="_blank" rel="noopener">باز کردن ربات بله</a>
       <button type="button" id="licenseCopySupportLink" class="license-support-copy">کپی لینک ربات</button>
-      <p class="license-support-note">اگر دکمه بالا در گوشی باز نشد، لینک ربات را کپی کن و داخل مرورگر یا خود برنامه بله باز کن.</p>
       <div class="license-card-pay">
         <div class="license-card-label">کارت‌به‌کارت</div>
         <div class="license-card-num" id="licenseCardNumber" dir="ltr" lang="en" style="direction:ltr;unicode-bidi:isolate;text-align:center">‎6219-8619-1017-1650‎</div>
         <button type="button" id="licenseCopyCardBtn" class="license-support-copy">کپی شماره کارت</button>
-        <p class="license-support-note">بعد از واریز، رسید را برای ربات بله بفرست تا کد فعال‌سازی برایت ارسال شود.</p>
+        <p class="license-support-note">بعد از واریز، رسید را در بله برای ربات بفرست.</p>
       </div>
     </div>
 
@@ -2607,13 +2630,18 @@ window.AEGIS_SUPPORT = {
     const ov = document.getElementById("licenseOverlay");
     const err = document.getElementById("licenseErr");
     if (err) err.textContent = msg || "";
-    if (ov) ov.classList.add("show");
+    if (ov) {
+      ov.classList.add("show");
+      ov.scrollTop = 0;
+    }
+    document.body.style.overflow = "hidden";
     const input = document.getElementById("licenseCodeInput");
-    if (input) setTimeout(function () { input.focus(); }, 200);
+    if (input) setTimeout(function () { try { input.blur(); } catch (e) {} }, 50);
   }
   function hideLicenseLock() {
     const ov = document.getElementById("licenseOverlay");
     if (ov) ov.classList.remove("show");
+    document.body.style.overflow = "";
   }
   async function unlockWithCode(code) {
     const err = document.getElementById("licenseErr");
@@ -2696,15 +2724,38 @@ window.AEGIS_SUPPORT = {
     }
     const unlockBtn = document.getElementById("licenseUnlockBtn");
     const closeBtn = document.getElementById("licenseCloseBtn");
+    const closeX = document.getElementById("licenseCloseX");
     const input = document.getElementById("licenseCodeInput");
     if (unlockBtn) unlockBtn.addEventListener("click", function () { unlockWithCode(input && input.value); });
     if (closeBtn) closeBtn.addEventListener("click", hideLicenseLock);
+    if (closeX) closeX.addEventListener("click", hideLicenseLock);
     if (input) input.addEventListener("keydown", function (e) { if (e.key === "Enter") unlockWithCode(input.value); });
+    // دکمه بک اندروید / مرورگر
+    window.addEventListener("popstate", function () {
+      const ov = document.getElementById("licenseOverlay");
+      if (ov && ov.classList.contains("show")) hideLicenseLock();
+    });
+    document.addEventListener("backbutton", function (e) {
+      const ov = document.getElementById("licenseOverlay");
+      if (ov && ov.classList.contains("show")) {
+        e.preventDefault();
+        hideLicenseLock();
+      }
+    }, false);
+    if (window.Capacitor && Capacitor.Plugins && Capacitor.Plugins.App) {
+      try {
+        Capacitor.Plugins.App.addListener("backButton", function () {
+          const ov = document.getElementById("licenseOverlay");
+          if (ov && ov.classList.contains("show")) hideLicenseLock();
+        });
+      } catch (e) {}
+    }
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
   else boot();
 })();
 
 </script>
+<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("./sw.js").catch(function(){})})}</script>
 </body>
 </html>
